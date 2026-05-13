@@ -52,19 +52,19 @@ msgstr "Order placed! Proceed to payment."
 
 #: payment/views.py:48
 msgid "支付成功！（模拟）"
-msgstr ""
+msgstr "Payment Successful! (Simulated)"
 
 #: products/views.py:56
 msgid "评价已提交"
-msgstr ""
+msgstr "Review Submitted"
 
 #: products/views.py:75
 msgid "已取消收藏"
-msgstr ""
+msgstr "Removed from Favorites"
 
 #: products/views.py:78
 msgid "已收藏"
-msgstr ""
+msgstr "Added to Favorites"
 
 #: templates/account/login.html:4 templates/account/login.html:29
 #: templates/base.html:123 templates/product/detail.html:91
@@ -77,15 +77,15 @@ msgstr "Welcome back"
 
 #: templates/account/login.html:12
 msgid "登录您的账户"
-msgstr ""
+msgstr "Login to Your Account"
 
 #: templates/account/login.html:33
 msgid "还没有账号？"
-msgstr ""
+msgstr "No account yet?"
 
 #: templates/account/login.html:34
 msgid "立即注册"
-msgstr ""
+msgstr "Register Now"
 
 #: templates/account/profile.html:4 templates/account/profile.html:14
 msgid "个人中心"
@@ -142,19 +142,19 @@ msgstr "Register"
 
 #: templates/account/register.html:11
 msgid "创建账号"
-msgstr ""
+msgstr "Create Account"
 
 #: templates/account/register.html:12
 msgid "开启您的日本之旅"
-msgstr ""
+msgstr "Start Your Japan Journey"
 
 #: templates/account/register.html:36
 msgid "已有账号？"
-msgstr ""
+msgstr "Already have an account?"
 
 #: templates/account/register.html:37
 msgid "立即登录"
-msgstr ""
+msgstr "Login Now"
 
 #: templates/admin/_stats.html:6
 msgid "总订单"
@@ -208,11 +208,11 @@ msgstr "Cancellation Policy"
 
 #: templates/booking/create.html:4
 msgid "预订"
-msgstr ""
+msgstr "Booking"
 
 #: templates/booking/create.html:11
 msgid "基准价格"
-msgstr ""
+msgstr "Base Price"
 
 #: templates/booking/create.html:11 templates/booking/create.html:27
 #: templates/cart/view.html:35 templates/product/detail.html:163
@@ -225,7 +225,7 @@ msgstr "Select Date"
 
 #: templates/booking/create.html:24
 msgid "请选择"
-msgstr ""
+msgstr "Please Select"
 
 #: templates/booking/create.html:27 templates/product/detail.html:179
 msgid "余"
@@ -237,23 +237,23 @@ msgstr "Quantity"
 
 #: templates/booking/create.html:40
 msgid "联系人信息"
-msgstr ""
+msgstr "Contact Info"
 
 #: templates/booking/create.html:43
 msgid "姓名"
-msgstr ""
+msgstr "Name"
 
 #: templates/booking/create.html:47
 msgid "邮箱"
-msgstr ""
+msgstr "Email"
 
 #: templates/booking/create.html:51
 msgid "电话"
-msgstr ""
+msgstr "Phone"
 
 #: templates/booking/create.html:56
 msgid "提交订单"
-msgstr ""
+msgstr "Submit Order"
 
 #: templates/cart/view.html:12
 msgid "确认您的预订项目"
@@ -317,7 +317,7 @@ msgstr ""
 
 #: templates/payment/simulate.html:11
 msgid "确认支付"
-msgstr ""
+msgstr "Confirm Payment"
 
 #: templates/payment/simulate.html:25
 msgid "当前为开发模式，无 Stripe 密钥时将启用模拟支付。"

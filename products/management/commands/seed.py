@@ -177,7 +177,7 @@ class Command(BaseCommand):
             self.stdout.write(f"📁 分类: {cat_slug}")
 
             for item in cat_data["items"]:
-                product, created = Product.objects.get_or_create(
+                product, created = Product.objects.update_or_create(
                     title_zh=item["title_zh"],
                     defaults={
                         "category": cat,
@@ -198,44 +198,45 @@ class Command(BaseCommand):
                     },
                 )
 
-                if created:
-                    # 创建未来90天的价格和库存
-                    for i in range(90):
-                        d = date.today() + timedelta(days=i + 1)
-                        price = item["base_price"]
-                        if random.random() < 0.3:
-                            price = int(item["base_price"] * random.uniform(0.8, 1.2))
-                        ProductDatePrice.objects.get_or_create(
-                            product=product,
-                            date=d,
-                            defaults={
-                                "price": price,
-                                "available_qty": random.randint(5, 50),
-                                "is_available": True,
-                            },
-                        )
+                # 创建未来90天的价格和库存（如果不存在）
+                for i in range(90):
+                    d = date.today() + timedelta(days=i + 1)
+                    price = item["base_price"]
+                    if random.random() < 0.3:
+                        price = int(item["base_price"] * random.uniform(0.8, 1.2))
+                    ProductDatePrice.objects.get_or_create(
+                        product=product,
+                        date=d,
+                        defaults={
+                            "price": price,
+                            "available_qty": random.randint(5, 50),
+                            "is_available": True,
+                        },
+                    )
 
-                    # 下载产品图片
-                    img_url = UNSPLASH_IMAGES.get(item["title_zh"])
-                    if img_url:
-                        try:
-                            resp = requests.get(img_url, timeout=10)
-                            if resp.status_code == 200:
-                                content_type = resp.headers.get("content-type", "image/jpeg")
-                                ext = "jpg" if "jpeg" in content_type else "png"
-                                filename = f"{product.id}_{item['title_zh'][:20]}.{ext}"
-                                ProductImage.objects.create(
-                                    product=product,
-                                    image=ContentFile(resp.content, name=filename),
-                                    is_cover=True,
-                                )
-                                self.stdout.write(f"  ✅ {item['title_zh']} (含图片)")
-                        except Exception as e:
-                            self.stdout.write(f"  ⚠️ {item['title_zh']} (图片下载失败: {e})")
-                    else:
-                        self.stdout.write(f"  ✅ {item['title_zh']}")
+                # 更新产品图片（删除旧图重新下载）
+                img_url = UNSPLASH_IMAGES.get(item["title_zh"])
+                if img_url:
+                    try:
+                        resp = requests.get(img_url, timeout=10)
+                        if resp.status_code == 200:
+                            # 删除已有图片
+                            product.images.all().delete()
+                            content_type = resp.headers.get("content-type", "image/jpeg")
+                            ext = "jpg" if "jpeg" in content_type else "png"
+                            filename = f"{product.id}_{item['title_zh'][:20]}.{ext}"
+                            ProductImage.objects.create(
+                                product=product,
+                                image=ContentFile(resp.content, name=filename),
+                                is_cover=True,
+                            )
+                            self.stdout.write(f"  ✅ {item['title_zh']} (图片已更新)")
+                        else:
+                            self.stdout.write(f"  ⚠️ {item['title_zh']} (图片下载失败: HTTP {resp.status_code})")
+                    except Exception as e:
+                        self.stdout.write(f"  ⚠️ {item['title_zh']} (图片下载失败: {e})")
                 else:
-                    self.stdout.write(f"  ⏭️ {item['title_zh']} (已存在)")
+                    self.stdout.write(f"  ✅ {item['title_zh']}")
 
         total_products = Product.objects.count()
         total_prices = ProductDatePrice.objects.count()

@@ -73,7 +73,14 @@
     <script>
         function changeLanguage(langCode) {
             var form = document.getElementById('lang-form');
+            var select = document.getElementById('lang-select');
             document.getElementById('lang-input').value = langCode;
+            // Add loading state
+            if (select) {
+                select.classList.add('opacity-50', 'pointer-events-none');
+                select.style.backgroundImage = 'url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2720%27 height=%2720%27 viewBox=%270 0 50 50%27%3E%3Cpath fill=%27%23666%27 d=%27M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z%27%3E%3CanimateTransform attributeType=%27xml%27 attributeName=%27transform%27 type=%27rotate%27 from=%270 25 25%27 to=%27360 25 25%27 dur=%270.6s%27 repeatCount=%27indefinite%27/%3E%3C/path%3E%3C/svg%3E")';
+                select.style.backgroundSize = '16px';
+            }
             form.submit();
         }
     </script>
@@ -136,7 +143,7 @@
                             <input type="hidden" name="next" value="{{ request.path }}">
                             <input type="hidden" name="language" id="lang-input" value="{{ LANG }}">
                         </form>
-                        <select class="lang-select text-xs py-1.5 pl-2 pr-6 rounded-lg border border-gray-200 bg-white text-gray-600 focus:ring-2 focus:ring-accent/30 focus:border-accent cursor-pointer"
+                        <select id="lang-select" class="lang-select text-xs py-1.5 pl-2 pr-6 rounded-lg border border-gray-200 bg-white text-gray-600 focus:ring-2 focus:ring-accent/30 focus:border-accent cursor-pointer transition-all duration-200"
                                 onchange="changeLanguage(this.value)">
                             {% for lang_code, lang_name in LANGUAGES %}
                             <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>

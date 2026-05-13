@@ -29,19 +29,26 @@
 </section>
 
 <!-- Categories -->
-<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-w-lg mx-auto">
+<section class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-20">
+    <div class="grid grid-cols-2 gap-4 sm:gap-6">
         {% for cat in categories %}
         <a href="{% url 'product_list' %}?category={{ cat.slug }}"
-           class="card-hover bg-white rounded-2xl p-4 sm:p-6 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.08)] border border-gray-50 text-center group">
-            <div class="text-3xl mb-2 sm:mb-3">
-                {% if forloop.counter0 == 0 %}🎯
-                {% elif forloop.counter0 == 1 %}🍜
-                {% elif forloop.counter0 == 2 %}🗻
-                {% else %}🎎{% endif %}
+           class="relative rounded-2xl overflow-hidden group shadow-lg min-h-[140px] sm:min-h-[160px] card-hover">
+            {% if forloop.counter0 == 0 %}
+            <div class="absolute inset-0 bg-gradient-to-br from-rose-400 via-red-400 to-orange-500"></div>
+            {% else %}
+            <div class="absolute inset-0 bg-gradient-to-br from-amber-400 via-yellow-500 to-orange-600"></div>
+            {% endif %}
+            <!-- Decorative circles -->
+            <div class="absolute -right-8 -top-8 w-32 h-32 rounded-full bg-white/10"></div>
+            <div class="absolute -left-4 -bottom-4 w-24 h-24 rounded-full bg-white/10"></div>
+            <div class="relative z-10 flex flex-col items-center justify-center h-full py-8 sm:py-10 px-4 text-center">
+                <span class="text-4xl sm:text-5xl mb-3">
+                    {% if forloop.counter0 == 0 %}🗾{% else %}🍜{% endif %}
+                </span>
+                <h3 class="text-white font-black text-lg sm:text-2xl drop-shadow-sm">{{ cat.name_zh }}</h3>
+                <p class="text-white/80 text-xs sm:text-sm mt-1 font-medium">{{ cat.name_en }}</p>
             </div>
-            <div class="font-bold text-gray-800 text-sm sm:text-base break-words">{{ cat.name_zh }}</div>
-            <div class="text-xs text-gray-400 mt-0.5 truncate">{{ cat.name_en }}</div>
         </a>
         {% endfor %}
     </div>
