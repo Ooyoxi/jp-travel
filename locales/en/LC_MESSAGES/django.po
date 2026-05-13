@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-13 23:11+0900\n"
+"POT-Creation-Date: 2026-05-14 01:33+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,37 +17,38 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
 #: accounts/views.py:15
 msgid "注册成功！"
-msgstr ""
+msgstr "Registration successful!"
 
 #: booking/views.py:25 cart/views.py:22
 msgid "所选日期不可用"
-msgstr ""
+msgstr "Selected date is not available"
 
 #: booking/views.py:27 cart/views.py:24
 msgid "库存不足"
-msgstr ""
+msgstr "Insufficient stock"
 
 #: booking/views.py:42
 msgid "订单已创建，请在个人中心查看。"
-msgstr ""
+msgstr "Order created. Check your profile."
 
 #: cart/views.py:41
 msgid "已加入购物车"
-msgstr ""
+msgstr "Added to cart"
 
 #: cart/views.py:60
 msgid "已从购物车移除"
-msgstr ""
+msgstr "Removed from cart"
 
 #: cart/views.py:69
 msgid "购物车为空"
-msgstr ""
+msgstr "Cart is empty"
 
 #: cart/views.py:84
 msgid "下单成功！请前往支付。"
-msgstr ""
+msgstr "Order placed! Proceed to payment."
 
 #: payment/views.py:48
 msgid "支付成功！（模拟）"
@@ -66,13 +67,13 @@ msgid "已收藏"
 msgstr ""
 
 #: templates/account/login.html:4 templates/account/login.html:29
-#: templates/base.html:100 templates/product/detail.html:91
+#: templates/base.html:123 templates/product/detail.html:91
 msgid "登录"
-msgstr ""
+msgstr "Login"
 
 #: templates/account/login.html:11 templates/account/profile.html:15
 msgid "欢迎回来"
-msgstr ""
+msgstr "Welcome back"
 
 #: templates/account/login.html:12
 msgid "登录您的账户"
@@ -88,56 +89,56 @@ msgstr ""
 
 #: templates/account/profile.html:4 templates/account/profile.html:14
 msgid "个人中心"
-msgstr ""
+msgstr "Profile"
 
 #: templates/account/profile.html:23
 msgid "我的订单"
-msgstr ""
+msgstr "My Orders"
 
 #: templates/account/profile.html:43 templates/admin/_stats.html:10
 msgid "待支付"
-msgstr ""
+msgstr "Pending Payment"
 
 #: templates/account/profile.html:47
 msgid "去支付"
-msgstr ""
+msgstr "Pay Now"
 
 #: templates/account/profile.html:51 templates/admin/_stats.html:14
 msgid "已支付"
-msgstr ""
+msgstr "Paid"
 
 #: templates/account/profile.html:55
 msgid "已取消"
-msgstr ""
+msgstr "Cancelled"
 
 #: templates/account/profile.html:59
 msgid "已完成"
-msgstr ""
+msgstr "Completed"
 
 #: templates/account/profile.html:70
 msgid "暂无订单"
-msgstr ""
+msgstr "No Orders Yet"
 
 #: templates/account/profile.html:71
 msgid "去发现精彩的日本体验吧"
-msgstr ""
+msgstr "Discover amazing Japan experiences"
 
 #: templates/account/profile.html:74 templates/cart/view.html:85
 msgid "浏览体验"
-msgstr ""
+msgstr "Browse Experiences"
 
 #: templates/account/profile.html:83
 msgid "我的收藏"
-msgstr ""
+msgstr "My Favorites"
 
 #: templates/account/profile.html:107
 msgid "还没有收藏任何体验"
-msgstr ""
+msgstr "No favorites yet"
 
 #: templates/account/register.html:4 templates/account/register.html:32
-#: templates/base.html:103
+#: templates/base.html:126
 msgid "注册"
-msgstr ""
+msgstr "Register"
 
 #: templates/account/register.html:11
 msgid "创建账号"
@@ -157,53 +158,53 @@ msgstr ""
 
 #: templates/admin/_stats.html:6
 msgid "总订单"
-msgstr ""
+msgstr "Total Orders"
 
 #: templates/admin/_stats.html:18
 msgid "产品数"
-msgstr ""
+msgstr "Products"
 
 #: templates/admin/_stats.html:22
 msgid "总收入"
-msgstr ""
+msgstr "Revenue"
 
-#: templates/base.html:71 templates/base.html:159 templates/product/list.html:4
-#: templates/product/list.html:11
-msgid "所有体验"
-msgstr ""
-
-#: templates/base.html:76 templates/cart/view.html:4
+#: templates/base.html:99 templates/cart/view.html:4
 #: templates/cart/view.html:11
 msgid "购物车"
-msgstr ""
+msgstr "Cart"
 
-#: templates/base.html:95
+#: templates/base.html:118
 msgid "退出"
-msgstr ""
+msgstr "Logout"
 
-#: templates/base.html:153
+#: templates/base.html:182
 msgid "精选日本各地独特体验，为您打造难忘的日本之旅。"
-msgstr ""
+msgstr "Curated unique experiences across Japan for an unforgettable journey."
 
-#: templates/base.html:157
+#: templates/base.html:186
 msgid "浏览"
-msgstr ""
+msgstr "Browse"
 
-#: templates/base.html:160
+#: templates/base.html:188 templates/product/list.html:4
+#: templates/product/list.html:11
+msgid "所有体验"
+msgstr "All Experiences"
+
+#: templates/base.html:189
 msgid "热门目的地"
-msgstr ""
+msgstr "Popular Destinations"
 
-#: templates/base.html:164
+#: templates/base.html:193
 msgid "支持"
-msgstr ""
+msgstr "Support"
 
-#: templates/base.html:166
+#: templates/base.html:195
 msgid "帮助中心"
-msgstr ""
+msgstr "Help Center"
 
-#: templates/base.html:167
+#: templates/base.html:196
 msgid "取消政策"
-msgstr ""
+msgstr "Cancellation Policy"
 
 #: templates/booking/create.html:4
 msgid "预订"
@@ -216,11 +217,11 @@ msgstr ""
 #: templates/booking/create.html:11 templates/booking/create.html:27
 #: templates/cart/view.html:35 templates/product/detail.html:163
 msgid "位"
-msgstr ""
+msgstr "person"
 
 #: templates/booking/create.html:22 templates/product/detail.html:172
 msgid "选择日期"
-msgstr ""
+msgstr "Select Date"
 
 #: templates/booking/create.html:24
 msgid "请选择"
@@ -228,11 +229,11 @@ msgstr ""
 
 #: templates/booking/create.html:27 templates/product/detail.html:179
 msgid "余"
-msgstr ""
+msgstr "left:"
 
 #: templates/booking/create.html:34 templates/product/detail.html:187
 msgid "数量"
-msgstr ""
+msgstr "Quantity"
 
 #: templates/booking/create.html:40
 msgid "联系人信息"
@@ -256,43 +257,43 @@ msgstr ""
 
 #: templates/cart/view.html:12
 msgid "确认您的预订项目"
-msgstr ""
+msgstr "Review your bookings"
 
 #: templates/cart/view.html:43
 msgid "删除"
-msgstr ""
+msgstr "Remove"
 
 #: templates/cart/view.html:54
 msgid "小计"
-msgstr ""
+msgstr "Subtotal"
 
 #: templates/cart/view.html:58
 msgid "税费"
-msgstr ""
+msgstr "Tax"
 
 #: templates/cart/view.html:59
 msgid "已含"
-msgstr ""
+msgstr "Included"
 
 #: templates/cart/view.html:62
 msgid "合计"
-msgstr ""
+msgstr "Total"
 
 #: templates/cart/view.html:70
 msgid "去结算"
-msgstr ""
+msgstr "Checkout"
 
 #: templates/cart/view.html:74
 msgid "继续购物"
-msgstr ""
+msgstr "Continue Shopping"
 
 #: templates/cart/view.html:81
 msgid "购物车是空的"
-msgstr ""
+msgstr "Your cart is empty"
 
 #: templates/cart/view.html:82
 msgid "去看看有哪些精彩的日本体验吧"
-msgstr ""
+msgstr "Discover amazing Japan experiences!"
 
 #: templates/payment/cancel.html:4
 msgid "支付取消"
@@ -344,52 +345,52 @@ msgstr ""
 
 #: templates/product/detail.html:11
 msgid "首页"
-msgstr ""
+msgstr "Home"
 
 #: templates/product/detail.html:13
 msgid "体验"
-msgstr ""
+msgstr "Experiences"
 
-#: templates/product/detail.html:34 templates/product/home.html:77
+#: templates/product/detail.html:34 templates/product/home.html:75
 #: templates/product/list.html:66
 msgid "暂无图片"
-msgstr ""
+msgstr "No image"
 
 #: templates/product/detail.html:41
 msgid "活动详情"
-msgstr ""
+msgstr "Details"
 
 #: templates/product/detail.html:48
 msgid "活动地点"
-msgstr ""
+msgstr "Location"
 
 #: templates/product/detail.html:51
 msgid "地图加载中..."
-msgstr ""
+msgstr "Loading map..."
 
 #: templates/product/detail.html:59
 msgid "用户评价"
-msgstr ""
+msgstr "Reviews"
 
 #: templates/product/detail.html:67
 msgid "您已评价"
-msgstr ""
+msgstr "You reviewed"
 
 #: templates/product/detail.html:72
 msgid "评分"
-msgstr ""
+msgstr "Rating"
 
 #: templates/product/detail.html:81
 msgid "分享您的体验..."
-msgstr ""
+msgstr "Share your experience..."
 
 #: templates/product/detail.html:84
 msgid "提交评价"
-msgstr ""
+msgstr "Submit Review"
 
 #: templates/product/detail.html:88
 msgid "完成体验并支付后可以评价"
-msgstr ""
+msgstr "Review after completing and paying"
 
 #: templates/product/detail.html:92
 msgid "后可以评价"
@@ -397,12 +398,12 @@ msgstr ""
 
 #: templates/product/detail.html:112
 msgid "暂无评价，来成为第一个评价的人吧"
-msgstr ""
+msgstr "No reviews yet. Be the first!"
 
-#: templates/product/detail.html:144 templates/product/home.html:97
+#: templates/product/detail.html:144 templates/product/home.html:95
 #: templates/product/list.html:87
 msgid "分钟"
-msgstr ""
+msgstr "min"
 
 #: templates/product/detail.html:148
 msgid "-"
@@ -420,90 +421,86 @@ msgstr ""
 msgid "语言"
 msgstr ""
 
-#: templates/product/detail.html:161 templates/product/home.html:93
+#: templates/product/detail.html:161 templates/product/home.html:91
 #: templates/product/list.html:83
 msgid "起"
-msgstr ""
+msgstr "from"
 
 #: templates/product/detail.html:175
 msgid "请选择日期"
-msgstr ""
+msgstr "-- Select Date --"
 
 #: templates/product/detail.html:200
 msgid "加入购物车"
-msgstr ""
+msgstr "Add to Cart"
 
 #: templates/product/detail.html:207
 msgid "登录后加入购物车"
-msgstr ""
+msgstr "Login to add to cart"
 
-#: templates/product/home.html:11
+#: templates/product/home.html:19
 msgid "日本旅游体验预订平台"
-msgstr ""
+msgstr "Japan Travel Experience Platform"
 
-#: templates/product/home.html:14
+#: templates/product/home.html:22
 msgid "探索日本之美"
-msgstr ""
+msgstr "Discover the Beauty of Japan"
 
-#: templates/product/home.html:17
+#: templates/product/home.html:25
 msgid "从北海道的雪到冲绳的海，精选全日本独特体验"
-msgstr ""
+msgstr "From Hokkaido's snow to Okinawa's sea —精选 curated experiences across Japan"
 
-#: templates/product/home.html:24
-msgid "搜索你想体验的日本..."
-msgstr ""
-
-#: templates/product/home.html:28
-msgid "搜索"
-msgstr ""
-
-#: templates/product/home.html:56
+#: templates/product/home.html:54
 msgid "推荐体验"
-msgstr ""
+msgstr "Recommended Experiences"
 
-#: templates/product/home.html:57
+#: templates/product/home.html:55
 msgid "精选最受欢迎的活动，让旅行更精彩"
-msgstr ""
+msgstr "Curated popular activities to make your trip special"
 
-#: templates/product/home.html:61 templates/product/list.html:100
+#: templates/product/home.html:59 templates/product/list.html:100
 msgid "查看全部"
-msgstr ""
+msgstr "View All"
 
-#: templates/product/home.html:109
+#: templates/product/home.html:107
 msgid "查看全部体验"
-msgstr ""
+msgstr "View All Experiences"
 
-#: templates/product/home.html:115
-msgid "暂无推荐体验，请先在管理后台添加。"
-msgstr ""
+#: templates/product/home.html:113
+msgid "暂无推荐体验"
+msgstr "No recommended experiences yet"
 
-#: templates/product/home.html:126
+#: templates/product/home.html:114
+msgid "请在管理后台添加产品或运行种子数据"
+msgstr "Add products in admin or run seed data"
+
+#: templates/product/home.html:125
 msgid "精选体验"
-msgstr ""
+msgstr "Curated Experiences"
 
-#: templates/product/home.html:130
+#: templates/product/home.html:129
 msgid "满意顾客"
-msgstr ""
+msgstr "Happy Customers"
 
-#: templates/product/home.html:134
+#: templates/product/home.html:133
 msgid "日本城市"
-msgstr ""
+msgstr "Japanese Cities"
 
-#: templates/product/home.html:138
+#: templates/product/home.html:137
 msgid "语言服务"
-msgstr ""
+msgstr "Languages Supported"
+
+#: templates/product/home.html:147
+msgid "准备好探索日本了吗？"
+msgstr "Ready to explore Japan?"
 
 #: templates/product/home.html:148
-msgid "准备好探索日本了吗？"
-msgstr ""
-
-#: templates/product/home.html:149
 msgid "立即注册，开始计划您的完美日本之旅"
-msgstr ""
+msgstr "Sign up now and start planning your perfect Japan trip"
 
-#: templates/product/home.html:152
+#: templates/product/home.html:151
 msgid "免费注册"
-msgstr ""
+msgstr "Sign Up Free"
 
 #: templates/product/list.html:12
 msgid "发现日本的精彩"
@@ -511,24 +508,24 @@ msgstr ""
 
 #: templates/product/list.html:15
 msgid "个体验"
-msgstr ""
+msgstr "experiences"
 
 #: templates/product/list.html:17
 msgid "清除筛选"
-msgstr ""
+msgstr "Clear filter"
 
 #: templates/product/list.html:30
 msgid "分类"
-msgstr ""
+msgstr "Categories"
 
 #: templates/product/list.html:36
 msgid "全部体验"
-msgstr ""
+msgstr "All Experiences"
 
 #: templates/product/list.html:97
 msgid "未找到体验"
-msgstr ""
+msgstr "No experiences found"
 
 #: templates/product/list.html:98
 msgid "试试其他关键词或分类"
-msgstr ""
+msgstr "Try other keywords or categories"

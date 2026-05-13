@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-13 23:11+0900\n"
+"POT-Creation-Date: 2026-05-14 01:33+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,37 +17,38 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
 #: accounts/views.py:15
 msgid "注册成功！"
-msgstr ""
+msgstr "登録成功！"
 
 #: booking/views.py:25 cart/views.py:22
 msgid "所选日期不可用"
-msgstr ""
+msgstr "選択した日付は利用できません"
 
 #: booking/views.py:27 cart/views.py:24
 msgid "库存不足"
-msgstr ""
+msgstr "在庫不足"
 
 #: booking/views.py:42
 msgid "订单已创建，请在个人中心查看。"
-msgstr ""
+msgstr "注文が作成されました。マイページで確認してください。"
 
 #: cart/views.py:41
 msgid "已加入购物车"
-msgstr ""
+msgstr "カートに追加しました"
 
 #: cart/views.py:60
 msgid "已从购物车移除"
-msgstr ""
+msgstr "カートから削除しました"
 
 #: cart/views.py:69
 msgid "购物车为空"
-msgstr ""
+msgstr "カートは空です"
 
 #: cart/views.py:84
 msgid "下单成功！请前往支付。"
-msgstr ""
+msgstr "注文完了！お支払いへ進んでください。"
 
 #: payment/views.py:48
 msgid "支付成功！（模拟）"
@@ -66,13 +67,13 @@ msgid "已收藏"
 msgstr ""
 
 #: templates/account/login.html:4 templates/account/login.html:29
-#: templates/base.html:100 templates/product/detail.html:91
+#: templates/base.html:123 templates/product/detail.html:91
 msgid "登录"
-msgstr ""
+msgstr "ログイン"
 
 #: templates/account/login.html:11 templates/account/profile.html:15
 msgid "欢迎回来"
-msgstr ""
+msgstr "おかえりなさい"
 
 #: templates/account/login.html:12
 msgid "登录您的账户"
@@ -88,56 +89,56 @@ msgstr ""
 
 #: templates/account/profile.html:4 templates/account/profile.html:14
 msgid "个人中心"
-msgstr ""
+msgstr "マイページ"
 
 #: templates/account/profile.html:23
 msgid "我的订单"
-msgstr ""
+msgstr "注文履歴"
 
 #: templates/account/profile.html:43 templates/admin/_stats.html:10
 msgid "待支付"
-msgstr ""
+msgstr "未払い"
 
 #: templates/account/profile.html:47
 msgid "去支付"
-msgstr ""
+msgstr "支払う"
 
 #: templates/account/profile.html:51 templates/admin/_stats.html:14
 msgid "已支付"
-msgstr ""
+msgstr "支払い済み"
 
 #: templates/account/profile.html:55
 msgid "已取消"
-msgstr ""
+msgstr "キャンセル済み"
 
 #: templates/account/profile.html:59
 msgid "已完成"
-msgstr ""
+msgstr "完了"
 
 #: templates/account/profile.html:70
 msgid "暂无订单"
-msgstr ""
+msgstr "注文はまだありません"
 
 #: templates/account/profile.html:71
 msgid "去发现精彩的日本体验吧"
-msgstr ""
+msgstr "素晴らしい日本体験を見つけましょう"
 
 #: templates/account/profile.html:74 templates/cart/view.html:85
 msgid "浏览体验"
-msgstr ""
+msgstr "体験を探す"
 
 #: templates/account/profile.html:83
 msgid "我的收藏"
-msgstr ""
+msgstr "お気に入り"
 
 #: templates/account/profile.html:107
 msgid "还没有收藏任何体验"
-msgstr ""
+msgstr "お気に入りの体験はまだありません"
 
 #: templates/account/register.html:4 templates/account/register.html:32
-#: templates/base.html:103
+#: templates/base.html:126
 msgid "注册"
-msgstr ""
+msgstr "登録"
 
 #: templates/account/register.html:11
 msgid "创建账号"
@@ -157,53 +158,53 @@ msgstr ""
 
 #: templates/admin/_stats.html:6
 msgid "总订单"
-msgstr ""
+msgstr "総注文数"
 
 #: templates/admin/_stats.html:18
 msgid "产品数"
-msgstr ""
+msgstr "商品数"
 
 #: templates/admin/_stats.html:22
 msgid "总收入"
-msgstr ""
+msgstr "総収入"
 
-#: templates/base.html:71 templates/base.html:159 templates/product/list.html:4
-#: templates/product/list.html:11
-msgid "所有体验"
-msgstr ""
-
-#: templates/base.html:76 templates/cart/view.html:4
+#: templates/base.html:99 templates/cart/view.html:4
 #: templates/cart/view.html:11
 msgid "购物车"
-msgstr ""
+msgstr "カート"
 
-#: templates/base.html:95
+#: templates/base.html:118
 msgid "退出"
-msgstr ""
+msgstr "ログアウト"
 
-#: templates/base.html:153
+#: templates/base.html:182
 msgid "精选日本各地独特体验，为您打造难忘的日本之旅。"
-msgstr ""
+msgstr "日本全国の厳選体験で、忘れられない旅を。"
 
-#: templates/base.html:157
+#: templates/base.html:186
 msgid "浏览"
-msgstr ""
+msgstr "ブラウズ"
 
-#: templates/base.html:160
+#: templates/base.html:188 templates/product/list.html:4
+#: templates/product/list.html:11
+msgid "所有体验"
+msgstr "すべての体験"
+
+#: templates/base.html:189
 msgid "热门目的地"
-msgstr ""
+msgstr "人気の目的地"
 
-#: templates/base.html:164
+#: templates/base.html:193
 msgid "支持"
-msgstr ""
+msgstr "サポート"
 
-#: templates/base.html:166
+#: templates/base.html:195
 msgid "帮助中心"
-msgstr ""
+msgstr "ヘルプセンター"
 
-#: templates/base.html:167
+#: templates/base.html:196
 msgid "取消政策"
-msgstr ""
+msgstr "キャンセルポリシー"
 
 #: templates/booking/create.html:4
 msgid "预订"
@@ -216,11 +217,11 @@ msgstr ""
 #: templates/booking/create.html:11 templates/booking/create.html:27
 #: templates/cart/view.html:35 templates/product/detail.html:163
 msgid "位"
-msgstr ""
+msgstr "名"
 
 #: templates/booking/create.html:22 templates/product/detail.html:172
 msgid "选择日期"
-msgstr ""
+msgstr "日付を選択"
 
 #: templates/booking/create.html:24
 msgid "请选择"
@@ -228,11 +229,11 @@ msgstr ""
 
 #: templates/booking/create.html:27 templates/product/detail.html:179
 msgid "余"
-msgstr ""
+msgstr "残り:"
 
 #: templates/booking/create.html:34 templates/product/detail.html:187
 msgid "数量"
-msgstr ""
+msgstr "人数"
 
 #: templates/booking/create.html:40
 msgid "联系人信息"
@@ -256,43 +257,43 @@ msgstr ""
 
 #: templates/cart/view.html:12
 msgid "确认您的预订项目"
-msgstr ""
+msgstr "予約内容を確認"
 
 #: templates/cart/view.html:43
 msgid "删除"
-msgstr ""
+msgstr "削除"
 
 #: templates/cart/view.html:54
 msgid "小计"
-msgstr ""
+msgstr "小計"
 
 #: templates/cart/view.html:58
 msgid "税费"
-msgstr ""
+msgstr "税金"
 
 #: templates/cart/view.html:59
 msgid "已含"
-msgstr ""
+msgstr "含む"
 
 #: templates/cart/view.html:62
 msgid "合计"
-msgstr ""
+msgstr "合計"
 
 #: templates/cart/view.html:70
 msgid "去结算"
-msgstr ""
+msgstr "精算へ"
 
 #: templates/cart/view.html:74
 msgid "继续购物"
-msgstr ""
+msgstr "買い物を続ける"
 
 #: templates/cart/view.html:81
 msgid "购物车是空的"
-msgstr ""
+msgstr "カートは空です"
 
 #: templates/cart/view.html:82
 msgid "去看看有哪些精彩的日本体验吧"
-msgstr ""
+msgstr "素晴らしい日本体験を見つけましょう！"
 
 #: templates/payment/cancel.html:4
 msgid "支付取消"
@@ -344,52 +345,52 @@ msgstr ""
 
 #: templates/product/detail.html:11
 msgid "首页"
-msgstr ""
+msgstr "ホーム"
 
 #: templates/product/detail.html:13
 msgid "体验"
-msgstr ""
+msgstr "体験"
 
-#: templates/product/detail.html:34 templates/product/home.html:77
+#: templates/product/detail.html:34 templates/product/home.html:75
 #: templates/product/list.html:66
 msgid "暂无图片"
-msgstr ""
+msgstr "画像なし"
 
 #: templates/product/detail.html:41
 msgid "活动详情"
-msgstr ""
+msgstr "アクティビティ詳細"
 
 #: templates/product/detail.html:48
 msgid "活动地点"
-msgstr ""
+msgstr "場所"
 
 #: templates/product/detail.html:51
 msgid "地图加载中..."
-msgstr ""
+msgstr "地図を読み込み中..."
 
 #: templates/product/detail.html:59
 msgid "用户评价"
-msgstr ""
+msgstr "レビュー"
 
 #: templates/product/detail.html:67
 msgid "您已评价"
-msgstr ""
+msgstr "レビュー済み"
 
 #: templates/product/detail.html:72
 msgid "评分"
-msgstr ""
+msgstr "評価"
 
 #: templates/product/detail.html:81
 msgid "分享您的体验..."
-msgstr ""
+msgstr "体験をシェア..."
 
 #: templates/product/detail.html:84
 msgid "提交评价"
-msgstr ""
+msgstr "レビューを送信"
 
 #: templates/product/detail.html:88
 msgid "完成体验并支付后可以评价"
-msgstr ""
+msgstr "体験完了後、レビューを投稿できます"
 
 #: templates/product/detail.html:92
 msgid "后可以评价"
@@ -397,12 +398,12 @@ msgstr ""
 
 #: templates/product/detail.html:112
 msgid "暂无评价，来成为第一个评价的人吧"
-msgstr ""
+msgstr "レビューはまだありません。最初にレビューしましょう"
 
-#: templates/product/detail.html:144 templates/product/home.html:97
+#: templates/product/detail.html:144 templates/product/home.html:95
 #: templates/product/list.html:87
 msgid "分钟"
-msgstr ""
+msgstr "分"
 
 #: templates/product/detail.html:148
 msgid "-"
@@ -420,90 +421,86 @@ msgstr ""
 msgid "语言"
 msgstr ""
 
-#: templates/product/detail.html:161 templates/product/home.html:93
+#: templates/product/detail.html:161 templates/product/home.html:91
 #: templates/product/list.html:83
 msgid "起"
-msgstr ""
+msgstr "から"
 
 #: templates/product/detail.html:175
 msgid "请选择日期"
-msgstr ""
+msgstr "-- 日付を選択 --"
 
 #: templates/product/detail.html:200
 msgid "加入购物车"
-msgstr ""
+msgstr "カートに入れる"
 
 #: templates/product/detail.html:207
 msgid "登录后加入购物车"
-msgstr ""
+msgstr "ログインしてカートに追加"
 
-#: templates/product/home.html:11
+#: templates/product/home.html:19
 msgid "日本旅游体验预订平台"
-msgstr ""
+msgstr "日本旅行体験予約プラットフォーム"
 
-#: templates/product/home.html:14
+#: templates/product/home.html:22
 msgid "探索日本之美"
-msgstr ""
+msgstr "日本の美しさを探求"
 
-#: templates/product/home.html:17
+#: templates/product/home.html:25
 msgid "从北海道的雪到冲绳的海，精选全日本独特体验"
-msgstr ""
+msgstr "北海道の雪から沖縄の海まで、日本全国の厳選体験"
 
-#: templates/product/home.html:24
-msgid "搜索你想体验的日本..."
-msgstr ""
-
-#: templates/product/home.html:28
-msgid "搜索"
-msgstr ""
-
-#: templates/product/home.html:56
+#: templates/product/home.html:54
 msgid "推荐体验"
-msgstr ""
+msgstr "おすすめ体験"
 
-#: templates/product/home.html:57
+#: templates/product/home.html:55
 msgid "精选最受欢迎的活动，让旅行更精彩"
-msgstr ""
+msgstr "厳選された人気アクティビティで旅をより豊かに"
 
-#: templates/product/home.html:61 templates/product/list.html:100
+#: templates/product/home.html:59 templates/product/list.html:100
 msgid "查看全部"
-msgstr ""
+msgstr "すべて見る"
 
-#: templates/product/home.html:109
+#: templates/product/home.html:107
 msgid "查看全部体验"
-msgstr ""
+msgstr "すべての体験を見る"
 
-#: templates/product/home.html:115
-msgid "暂无推荐体验，请先在管理后台添加。"
-msgstr ""
+#: templates/product/home.html:113
+msgid "暂无推荐体验"
+msgstr "おすすめ体験はまだありません"
 
-#: templates/product/home.html:126
+#: templates/product/home.html:114
+msgid "请在管理后台添加产品或运行种子数据"
+msgstr "管理画面で商品を追加するか、シードデータを実行してください"
+
+#: templates/product/home.html:125
 msgid "精选体验"
-msgstr ""
+msgstr "厳選体験"
 
-#: templates/product/home.html:130
+#: templates/product/home.html:129
 msgid "满意顾客"
-msgstr ""
+msgstr "満足したお客様"
 
-#: templates/product/home.html:134
+#: templates/product/home.html:133
 msgid "日本城市"
-msgstr ""
+msgstr "日本の都市"
 
-#: templates/product/home.html:138
+#: templates/product/home.html:137
 msgid "语言服务"
-msgstr ""
+msgstr "対応言語"
+
+#: templates/product/home.html:147
+msgid "准备好探索日本了吗？"
+msgstr "日本を探索する準備はできましたか？"
 
 #: templates/product/home.html:148
-msgid "准备好探索日本了吗？"
-msgstr ""
-
-#: templates/product/home.html:149
 msgid "立即注册，开始计划您的完美日本之旅"
-msgstr ""
+msgstr "今すぐ登録して、完璧な日本旅行を計画しましょう"
 
-#: templates/product/home.html:152
+#: templates/product/home.html:151
 msgid "免费注册"
-msgstr ""
+msgstr "無料登録"
 
 #: templates/product/list.html:12
 msgid "发现日本的精彩"
@@ -511,24 +508,24 @@ msgstr ""
 
 #: templates/product/list.html:15
 msgid "个体验"
-msgstr ""
+msgstr "件の体験"
 
 #: templates/product/list.html:17
 msgid "清除筛选"
-msgstr ""
+msgstr "フィルター解除"
 
 #: templates/product/list.html:30
 msgid "分类"
-msgstr ""
+msgstr "カテゴリー"
 
 #: templates/product/list.html:36
 msgid "全部体验"
-msgstr ""
+msgstr "すべての体験"
 
 #: templates/product/list.html:97
 msgid "未找到体验"
-msgstr ""
+msgstr "体験が見つかりません"
 
 #: templates/product/list.html:98
 msgid "试试其他关键词或分类"
-msgstr ""
+msgstr "他のキーワードやカテゴリーをお試しください"

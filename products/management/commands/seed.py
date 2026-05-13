@@ -10,9 +10,7 @@ from datetime import date, timedelta
 
 # Unsplash URLs for product images
 UNSPLASH_IMAGES = {
-    "东京迪士尼乐园一日游": "https://images.unsplash.com/photo-1513883049090-d0b7439799bf?w=800",
-    "大阪环球影城一日游": "https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?w=800",
-    "东京晴空塔展望台": "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800",
+    "东京迪士尼乐园一日游": "https://images.unsplash.com/photo-1536697246787-1f7ae568d89a?w=800",
     "京都和服体验一日游": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800",
     "富士山登山徒步一日游": "https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=800",
     "东京寿司制作课程": "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800",
@@ -22,14 +20,14 @@ UNSPLASH_IMAGES = {
 }
 
 CATEGORY_MAP = {
-    "体验活动": {"name_en": "Experiences", "name_ja": "体験"},
+    "旅游活动": {"name_en": "Tours & Activities", "name_ja": "観光ツアー"},
     "美食体验": {"name_en": "Food & Drink", "name_ja": "グルメ"},
 }
 
 
 PRODUCTS = [
     {
-        "category": "体验活动",
+        "category": "旅游活动",
         "items": [
             {
                 "title_zh": "东京迪士尼乐园一日游",
@@ -43,38 +41,6 @@ PRODUCTS = [
                 "location_en": "Urayasu, Chiba",
                 "base_price": 7900,
                 "duration_minutes": 600,
-                "max_participants": 1,
-                "min_participants": 1,
-                "featured": True,
-            },
-            {
-                "title_zh": "大阪环球影城一日游",
-                "title_ja": "USJ一日ツアー",
-                "title_en": "Universal Studios Japan Day Tour",
-                "description_zh": "超级任天堂世界、哈利波特魔法世界等热门园区一票畅玩。",
-                "description_ja": "スーパー・ニンテンドー・ワールド、ウィザーディング・ワールド・オブ・ハリー・ポッターなど。",
-                "description_en": "Super Nintendo World, Wizarding World of Harry Potter and more!",
-                "location_zh": "大阪市此花区",
-                "location_ja": "大阪市此花区",
-                "location_en": "Konohana, Osaka",
-                "base_price": 8600,
-                "duration_minutes": 600,
-                "max_participants": 1,
-                "min_participants": 1,
-                "featured": True,
-            },
-            {
-                "title_zh": "东京晴空塔展望台",
-                "title_ja": "東京スカイツリー展望台",
-                "title_en": "Tokyo Skytree Observatory",
-                "description_zh": "日本最高塔，350米和450米双展望台，360度俯瞰东京全景。",
-                "description_ja": "日本一高いタワー。350mと450mの二つの展望台から東京を一望。",
-                "description_en": "Japan's tallest tower. Dual observatories at 350m and 450m with 360° Tokyo views.",
-                "location_zh": "东京都墨田区",
-                "location_ja": "東京都墨田区",
-                "location_en": "Sumida, Tokyo",
-                "base_price": 2100,
-                "duration_minutes": 120,
                 "max_participants": 1,
                 "min_participants": 1,
                 "featured": True,
