@@ -1,6 +1,35 @@
+import os
+import random
+from io import BytesIO
+
+import requests
+from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
-from products.models import Category, Product, ProductDatePrice
+from products.models import Category, Product, ProductDatePrice, ProductImage
 from datetime import date, timedelta
+
+# Unsplash image IDs for different products
+UNSPLASH_IMAGES = {
+    "东京迪士尼乐园一日门票": "https://images.unsplash.com/photo-1513883049090-d0b7439799bf?w=800",
+    "大阪环球影城一日券": "https://images.unsplash.com/photo-1513883049090-d0b7439799bf?w=800",
+    "东京晴空塔展望台门票": "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800",
+    "京都和服体验一日游": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800",
+    "富士山登山徒步一日游": "https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=800",
+    "东京寿司制作课程": "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800",
+    "日本铁路周游券（7日）": "https://images.unsplash.com/photo-1525160354320-d8e92641c563?w=800",
+    "东京地铁24小时券": "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800",
+    "大阪道顿堀美食徒步之旅": "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800",
+    "京都抹茶体验与茶道课程": "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800",
+}
+
+HERO_IMAGE_URL = "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1920"
+
+CATEGORY_MAP = {
+    "景点门票": {"name_en": "Attractions", "name_ja": "観光スポット"},
+    "体验活动": {"name_en": "Activities", "name_ja": "体験アクティビティ"},
+    "交通票券": {"name_en": "Transport", "name_ja": "交通チケット"},
+    "美食体验": {"name_en": "Food & Drink", "name_ja": "グルメ"},
+}
 
 
 PRODUCTS = [
@@ -191,15 +220,27 @@ class Command(BaseCommand):
     help = "填充演示数据"
 
     def handle(self, *args, **options):
+        self.stdout.write("开始填充数据...\n")
+
         for cat_data in PRODUCTS:
-            cat, _ = Category.objects.get_or_create(
-                slug=cat_data["category"],
+            cat_slug = cat_data["category"]
+            names = CATEGORY_MAP.get(cat_slug, {"name_en": cat_slug, "name_ja": cat_slug})
+            cat, created = Category.objects.get_or_create(
+                slug=cat_slug,
                 defaults={
-                    "name_zh": cat_data["category"],
-                    "name_ja": cat_data["category"],
-                    "name_en": cat_data["category"],
+                    "name_zh": cat_slug,
+                    "name_ja": names["name_ja"],
+                    "name_en": names["name_en"],
                 },
             )
+            if not created:
+                # Update names if already exists
+                Category.objects.filter(slug=cat_slug).update(
+                    name_ja=names["name_ja"],
+                    name_en=names["name_en"],
+                )
+            self.stdout.write(f"📁 分类: {cat_slug}")
+
             for item in cat_data["items"]:
                 product, created = Product.objects.get_or_create(
                     title_zh=item["title_zh"],
@@ -221,12 +262,11 @@ class Command(BaseCommand):
                         "is_active": True,
                     },
                 )
+
                 if created:
                     # 创建未来90天的价格和库存
                     for i in range(90):
                         d = date.today() + timedelta(days=i + 1)
-                        # 随机价格波动
-                        import random
                         price = item["base_price"]
                         if random.random() < 0.3:
                             price = int(item["base_price"] * random.uniform(0.8, 1.2))
@@ -239,10 +279,30 @@ class Command(BaseCommand):
                                 "is_available": True,
                             },
                         )
-                    self.stdout.write(f"  ✅ {item['title_zh']}")
+
+                    # 下载产品图片
+                    img_url = UNSPLASH_IMAGES.get(item["title_zh"])
+                    if img_url:
+                        try:
+                            resp = requests.get(img_url, timeout=10)
+                            if resp.status_code == 200:
+                                content_type = resp.headers.get("content-type", "image/jpeg")
+                                ext = "jpg" if "jpeg" in content_type else "png"
+                                filename = f"{product.id}_{item['title_zh'][:20]}.{ext}"
+                                ProductImage.objects.create(
+                                    product=product,
+                                    image=ContentFile(resp.content, name=filename),
+                                    is_cover=True,
+                                )
+                                self.stdout.write(f"  ✅ {item['title_zh']} (含图片)")
+                        except Exception as e:
+                            self.stdout.write(f"  ⚠️ {item['title_zh']} (图片下载失败: {e})")
+                    else:
+                        self.stdout.write(f"  ✅ {item['title_zh']}")
                 else:
                     self.stdout.write(f"  ⏭️ {item['title_zh']} (已存在)")
 
         total_products = Product.objects.count()
         total_prices = ProductDatePrice.objects.count()
-        self.stdout.write(self.style.SUCCESS(f"\n🎉 填充完成！共 {total_products} 个产品，{total_prices} 个日期价格"))
+        total_images = ProductImage.objects.count()
+        self.stdout.write(self.style.SUCCESS(f"\n🎉 填充完成！共 {total_products} 个产品，{total_prices} 个日期价格，{total_images} 张图片"))

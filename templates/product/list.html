@@ -24,11 +24,11 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     <div class="flex flex-col lg:flex-row gap-8">
 
-        <!-- Sidebar -->
+        <!-- Sidebar - horizontal scroll on mobile -->
         <aside class="lg:w-56 shrink-0">
-            <div class="bg-white rounded-2xl p-5 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.06)] border border-gray-50 sticky top-24">
-                <h3 class="font-bold text-gray-800 mb-3 text-sm uppercase tracking-wider">{% trans "分类" %}</h3>
-                <ul class="space-y-1">
+            <div class="lg:bg-white lg:rounded-2xl lg:p-5 lg:shadow-[0_8px_24px_-6px_rgba(0,0,0,0.06)] lg:border lg:border-gray-50 lg:sticky lg:top-24">
+                <h3 class="font-bold text-gray-800 mb-3 text-sm uppercase tracking-wider hidden lg:block">{% trans "分类" %}</h3>
+                <ul class="flex lg:flex-row gap-1 overflow-x-auto pb-2 lg:pb-0 -mx-4 px-4 lg:mx-0 lg:px-0 lg:flex-col lg:space-y-1 scrollbar-hide">
                     <li>
                         <a href="{% url 'product_list' %}"
                            class="block px-3 py-2 rounded-xl text-sm font-medium transition-all
