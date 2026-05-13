@@ -94,11 +94,6 @@
 
                 <!-- Nav -->
                 <nav class="flex items-center gap-0.5 sm:gap-3 text-xs sm:text-sm font-medium">
-                    <a href="{% url 'product_list' %}"
-                       class="px-2 sm:px-3 py-2 rounded-lg text-gray-600 hover:text-primary hover:bg-gray-50 transition-all whitespace-nowrap">
-                        {% trans "所有体验" %}
-                    </a>
-
                     <a href="{% url 'cart_view' %}"
                        class="px-3 py-2 rounded-lg text-gray-600 hover:text-primary hover:bg-gray-50 transition-all relative">
                         <span class="hidden sm:inline">{% trans "购物车" %}</span>
@@ -141,15 +136,7 @@
                             <input type="hidden" name="next" value="{{ request.path }}">
                             <input type="hidden" name="language" id="lang-input" value="{{ LANG }}">
                         </form>
-                        <div class="hidden sm:flex items-center gap-1">
-                            {% for lang_code, lang_name in LANGUAGES %}
-                            <button onclick="changeLanguage('{{ lang_code }}')"
-                                    class="px-2 py-1 text-xs rounded font-semibold uppercase tracking-wider transition-all cursor-pointer
-                                           {% if lang_code == LANGUAGE_CODE %}bg-primary text-white{% else %}text-gray-400 hover:text-primary hover:bg-gray-50{% endif %}">
-                                {% if lang_code == "zh-hans" %}中{% elif lang_code == "ja" %}日{% else %}EN{% endif %}</button>
-                            {% endfor %}
-                        </div>
-                        <select class="sm:hidden lang-select text-xs py-1.5 pl-2 pr-6 rounded-lg border border-gray-200 bg-white text-gray-600 focus:ring-2 focus:ring-accent/30 focus:border-accent cursor-pointer"
+                        <select class="lang-select text-xs py-1.5 pl-2 pr-6 rounded-lg border border-gray-200 bg-white text-gray-600 focus:ring-2 focus:ring-accent/30 focus:border-accent cursor-pointer"
                                 onchange="changeLanguage(this.value)">
                             {% for lang_code, lang_name in LANGUAGES %}
                             <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>

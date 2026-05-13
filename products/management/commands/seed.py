@@ -8,38 +8,33 @@ from django.core.management.base import BaseCommand
 from products.models import Category, Product, ProductDatePrice, ProductImage
 from datetime import date, timedelta
 
-# Unsplash image IDs for different products
+# Unsplash URLs for product images
 UNSPLASH_IMAGES = {
-    "东京迪士尼乐园一日门票": "https://images.unsplash.com/photo-1513883049090-d0b7439799bf?w=800",
-    "大阪环球影城一日券": "https://images.unsplash.com/photo-1513883049090-d0b7439799bf?w=800",
-    "东京晴空塔展望台门票": "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800",
+    "东京迪士尼乐园一日游": "https://images.unsplash.com/photo-1513883049090-d0b7439799bf?w=800",
+    "大阪环球影城一日游": "https://images.unsplash.com/photo-1605721911519-3dfeb3be25e7?w=800",
+    "东京晴空塔展望台": "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800",
     "京都和服体验一日游": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800",
     "富士山登山徒步一日游": "https://images.unsplash.com/photo-1478436127897-769e1b3f0f36?w=800",
     "东京寿司制作课程": "https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=800",
-    "日本铁路周游券（7日）": "https://images.unsplash.com/photo-1525160354320-d8e92641c563?w=800",
-    "东京地铁24小时券": "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800",
+    "东京地铁24小时券": "https://images.unsplash.com/photo-1525160354320-d8e92641c563?w=800",
     "大阪道顿堀美食徒步之旅": "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800",
     "京都抹茶体验与茶道课程": "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=800",
 }
 
-HERO_IMAGE_URL = "https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=1920"
-
 CATEGORY_MAP = {
-    "景点门票": {"name_en": "Attractions", "name_ja": "観光スポット"},
-    "体验活动": {"name_en": "Activities", "name_ja": "体験アクティビティ"},
-    "交通票券": {"name_en": "Transport", "name_ja": "交通チケット"},
+    "体验活动": {"name_en": "Experiences", "name_ja": "体験"},
     "美食体验": {"name_en": "Food & Drink", "name_ja": "グルメ"},
 }
 
 
 PRODUCTS = [
     {
-        "category": "景点门票",
+        "category": "体验活动",
         "items": [
             {
-                "title_zh": "东京迪士尼乐园一日门票",
-                "title_ja": "東京ディズニーランド 1デイパスポート",
-                "title_en": "Tokyo Disneyland 1-Day Passport",
+                "title_zh": "东京迪士尼乐园一日游",
+                "title_ja": "東京ディズニーランド一日ツアー",
+                "title_en": "Tokyo Disneyland Day Tour",
                 "description_zh": "体验东京迪士尼乐园的魔法世界，包含所有游乐设施和表演。无需排队换票，扫码直接入园。",
                 "description_ja": "東京ディズニーランドの魔法の世界を体験。すべてのアトラクションとショーを楽しめます。",
                 "description_en": "Experience the magic of Tokyo Disneyland. Includes all rides and shows. Direct QR code entry.",
@@ -53,9 +48,9 @@ PRODUCTS = [
                 "featured": True,
             },
             {
-                "title_zh": "大阪环球影城一日券",
-                "title_ja": "USJ 1デイ・パス",
-                "title_en": "Universal Studios Japan 1-Day Pass",
+                "title_zh": "大阪环球影城一日游",
+                "title_ja": "USJ一日ツアー",
+                "title_en": "Universal Studios Japan Day Tour",
                 "description_zh": "超级任天堂世界、哈利波特魔法世界等热门园区一票畅玩。",
                 "description_ja": "スーパー・ニンテンドー・ワールド、ウィザーディング・ワールド・オブ・ハリー・ポッターなど。",
                 "description_en": "Super Nintendo World, Wizarding World of Harry Potter and more!",
@@ -69,9 +64,9 @@ PRODUCTS = [
                 "featured": True,
             },
             {
-                "title_zh": "东京晴空塔展望台门票",
-                "title_ja": "東京スカイツリー展望台入場券",
-                "title_en": "Tokyo Skytree Observatory Ticket",
+                "title_zh": "东京晴空塔展望台",
+                "title_ja": "東京スカイツリー展望台",
+                "title_en": "Tokyo Skytree Observatory",
                 "description_zh": "日本最高塔，350米和450米双展望台，360度俯瞰东京全景。",
                 "description_ja": "日本一高いタワー。350mと450mの二つの展望台から東京を一望。",
                 "description_en": "Japan's tallest tower. Dual observatories at 350m and 450m with 360° Tokyo views.",
@@ -84,11 +79,6 @@ PRODUCTS = [
                 "min_participants": 1,
                 "featured": True,
             },
-        ],
-    },
-    {
-        "category": "体验活动",
-        "items": [
             {
                 "title_zh": "京都和服体验一日游",
                 "title_ja": "京都着物レンタル一日体験",
@@ -137,32 +127,11 @@ PRODUCTS = [
                 "min_participants": 2,
                 "featured": False,
             },
-        ],
-    },
-    {
-        "category": "交通票券",
-        "items": [
-            {
-                "title_zh": "日本铁路周游券（7日）",
-                "title_ja": "ジャパンレールパス（7日間）",
-                "title_en": "JR Pass 7 Days",
-                "description_zh": "无限次乘坐JR全国线路（含新干线），7天内畅游日本各地。超值之选。",
-                "description_ja": "全国のJR線（新幹線含む）が7日間乗り放題。日本一周旅行に最適。",
-                "description_en": "Unlimited JR rides nationwide including Shinkansen for 7 days. Best value for multi-city travel.",
-                "location_zh": "全国通用",
-                "location_ja": "全国利用可能",
-                "location_en": "Nationwide",
-                "base_price": 50000,
-                "duration_minutes": 10080,
-                "max_participants": 1,
-                "min_participants": 1,
-                "featured": True,
-            },
             {
                 "title_zh": "东京地铁24小时券",
                 "title_ja": "東京メトロ24時間券",
                 "title_en": "Tokyo Metro 24-Hour Pass",
-                "description_zh": "24小时内无限次乘坐东京地铁全线，覆盖东京主要景点区域。",
+                "description_zh": "24小时内无限次乘坐东京地铁全线，覆盖东京主要景点区域。出行必备。",
                 "description_ja": "24時間東京メトロ全線乗り放題。主要観光エリアをカバー。",
                 "description_en": "Unlimited Tokyo Metro rides for 24 hours. Covers all major sightseeing areas.",
                 "location_zh": "东京都",
