@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "支付取消" %} - Japan Travel{% endblock %}
+
+{% block content %}
+<div class="min-h-[60vh] flex items-center justify-center px-4 py-12">
+    <div class="w-full max-w-md text-center">
+        <div class="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-6">
+            <span class="text-4xl">↩️</span>
+        </div>
+        <h1 class="text-3xl font-black text-gray-800 mb-4">{% trans "支付已取消" %}</h1>
+        <p class="text-gray-500 mb-8">{% trans "您可以稍后在个人中心重新支付。" %}</p>
+        <a href="{% url 'profile' %}" class="inline-flex items-center gap-2 bg-accent hover:bg-vermilion text-white px-8 py-3.5 rounded-xl font-bold transition-all shadow-lg shadow-accent/20">
+            {% trans "返回个人中心" %} →
+        </a>
+    </div>
+</div>
+{% endblock %}

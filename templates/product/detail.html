@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ product.title_zh }} - Japan Travel{% endblock %}
+
+{% block content %}
+<!-- Breadcrumb -->
+<div class="bg-white border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <div class="flex items-center gap-2 text-sm text-gray-400">
+            <a href="{% url 'home' %}" class="hover:text-primary transition-colors">{% trans "首页" %}</a>
+            <span>/</span>
+            <a href="{% url 'product_list' %}" class="hover:text-primary transition-colors">{% trans "体验" %}</a>
+            <span>/</span>
+            <span class="text-gray-600">{{ product.title_zh }}</span>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
+
+        <!-- Left: Images & Description -->
+        <div class="lg:col-span-3 space-y-8">
+
+            <!-- Main Image -->
+            <div class="relative rounded-2xl overflow-hidden shadow-lg aspect-[16/10]">
+                {% if product.images.all %}
+                <img src="{{ product.images.first.image.url }}"
+                     alt="{{ product.title_zh }}"
+                     class="w-full h-full object-cover">
+                {% else %}
+                <div class="w-full h-full img-placeholder flex items-center justify-center text-white/40 text-lg">
+                    {% trans "暂无图片" %}
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Description -->
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.06)] border border-gray-50">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">{% trans "活动详情" %}</h2>
+                <p class="text-gray-600 leading-relaxed whitespace-pre-line">{{ product.description_zh }}</p>
+            </div>
+
+            <!-- Location -->
+            {% if product.latitude and product.longitude %}
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.06)] border border-gray-50">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">{% trans "活动地点" %}</h2>
+                <p class="text-sm text-gray-500 mb-3">📍 {{ product.location_zh }}</p>
+                <div class="bg-gray-100 rounded-xl h-48 flex items-center justify-center text-gray-400 text-sm">
+                    {% trans "地图加载中..." %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Reviews -->
+            <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.06)] border border-gray-50">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                    <span>⭐</span> {% trans "用户评价" %}
+                    {% if reviews %}
+                    <span class="text-sm font-normal text-gray-400">({{ reviews|length }})</span>
+                    {% endif %}
+                </h2>
+
+                {% if user_review %}
+                <div class="px-4 py-3 bg-green-50 border border-green-200 rounded-xl text-sm text-green-700 mb-4">
+                    ✅ {% trans "您已评价" %} — ⭐{{ user_review.rating }}
+                </div>
+                {% elif can_review %}
+                <form method="post" class="mb-6 p-4 bg-gray-50 rounded-xl">
+                    {% csrf_token %}
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">{% trans "评分" %}</label>
+                    <div class="flex gap-2 mb-3">
+                        {% for i in "12345" %}
+                        <label class="cursor-pointer text-2xl hover:scale-110 transition-transform">
+                            <input type="radio" name="rating" value="{{ i }}" class="hidden" {% if forloop.last %}checked{% endif %}>
+                            ⭐
+                        </label>
+                        {% endfor %}
+                    </div>
+                    <textarea name="comment" rows="2" placeholder="{% trans '分享您的体验...' %}"
+                              class="w-full px-3 py-2 rounded-xl border border-gray-200 text-sm mb-3"></textarea>
+                    <button type="submit" class="bg-accent hover:bg-vermilion text-white px-5 py-2 rounded-xl text-sm font-semibold transition-all">
+                        {% trans "提交评价" %}
+                    </button>
+                </form>
+                {% elif user.is_authenticated %}
+                <p class="text-sm text-gray-400 mb-4">{% trans "完成体验并支付后可以评价" %}</p>
+                {% else %}
+                <p class="text-sm text-gray-400 mb-4">
+                    <a href="{% url 'login' %}?next={{ request.path }}" class="text-accent">{% trans "登录" %}</a>
+                    {% trans "后可以评价" %}
+                </p>
+                {% endif %}
+
+                {% if reviews %}
+                <div class="space-y-4">
+                    {% for review in reviews %}
+                    <div class="border-b border-gray-50 pb-4 last:border-0 last:pb-0">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="font-semibold text-sm text-gray-800">{{ review.user.username }}</span>
+                            <span class="text-sm">{% for _ in "12345"|slice:review.rating %}⭐{% endfor %}</span>
+                        </div>
+                        {% if review.comment %}
+                        <p class="text-sm text-gray-600">{{ review.comment }}</p>
+                        {% endif %}
+                        <p class="text-xs text-gray-400 mt-1">{{ review.created_at|date:"Y-m-d" }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="text-sm text-gray-400 text-center py-6">{% trans "暂无评价，来成为第一个评价的人吧" %}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Right: Booking Card -->
+        <div class="lg:col-span-2">
+            <div class="bg-white rounded-2xl shadow-[0_8px_24px_-6px_rgba(0,0,0,0.08)] border border-gray-50 sticky top-24 overflow-hidden">
+                <!-- Header -->
+                <div class="p-6 sm:p-8 border-b border-gray-50">
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <div class="text-sm text-gray-400 mb-2">{{ product.category.name_zh }}</div>
+                            <h1 class="text-2xl sm:text-3xl font-black text-gray-900 mb-2">{{ product.title_zh }}</h1>
+                            {% if product.location_zh %}
+                            <p class="text-sm text-gray-500">📍 {{ product.location_zh }}</p>
+                            {% endif %}
+                        </div>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'toggle_favorite' product.id %}"
+                           class="shrink-0 w-10 h-10 flex items-center justify-center rounded-xl border border-gray-200 hover:bg-gray-50 transition-all text-xl">
+                            {% if is_favorited %}❤️{% else %}🤍{% endif %}
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Key Info -->
+                <div class="px-6 sm:px-8 py-6 grid grid-cols-3 gap-4 border-b border-gray-50">
+                    <div class="text-center">
+                        <div class="text-lg">⏱️</div>
+                        <div class="text-sm font-semibold text-gray-800 mt-1">{{ product.duration_minutes }}</div>
+                        <div class="text-xs text-gray-400">{% trans "分钟" %}</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg">👥</div>
+                        <div class="text-sm font-semibold text-gray-800 mt-1">{{ product.min_participants }}{% trans "-" %}{{ product.max_participants }}</div>
+                        <div class="text-xs text-gray-400">{% trans "人数" %}</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-lg">💬</div>
+                        <div class="text-sm font-semibold text-gray-800 mt-1">{% trans "中/日/英" %}</div>
+                        <div class="text-xs text-gray-400">{% trans "语言" %}</div>
+                    </div>
+                </div>
+
+                <!-- Price -->
+                <div class="px-6 sm:px-8 py-4 border-b border-gray-50">
+                    <div class="flex items-baseline gap-1">
+                        <span class="text-sm text-gray-400">{% trans "起" %}</span>
+                        <span class="text-3xl font-black text-accent">¥{{ product.base_price }}</span>
+                        <span class="text-sm text-gray-400">/ {% trans "位" %}</span>
+                    </div>
+                </div>
+
+                <!-- Add to Cart Form -->
+                {% if user.is_authenticated %}
+                <form action="{% url 'cart_add' product.id %}" method="post" class="p-6 sm:p-8 space-y-4">
+                    {% csrf_token %}
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">{% trans "选择日期" %}</label>
+                        <select name="date"
+                                class="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-sm focus:ring-2 focus:ring-accent/30 focus:border-accent transition-all appearance-none">
+                            <option value="">-- {% trans "请选择日期" %} --</option>
+                            {% for dp in product.date_prices.all %}
+                                {% if dp.is_available %}
+                                <option value="{{ dp.date|date:'Y-m-d' }}">
+                                    {{ dp.date|date:"Y-m-d" }} — ¥{{ dp.price }} ({% trans "余" %}{{ dp.available_qty }})
+                                </option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1.5">{% trans "数量" %}</label>
+                        <div class="flex items-center gap-3">
+                            <button type="button" onclick="this.nextElementSibling.stepDown()"
+                                    class="w-10 h-10 rounded-xl border border-gray-200 hover:bg-gray-50 text-lg font-semibold transition-all">-</button>
+                            <input type="number" name="quantity" value="1" min="1" max="99"
+                                   class="w-16 text-center px-3 py-2.5 rounded-xl border border-gray-200 bg-gray-50 text-sm font-semibold focus:ring-2 focus:ring-accent/30 focus:border-accent">
+                            <button type="button" onclick="this.previousElementSibling.stepUp()"
+                                    class="w-10 h-10 rounded-xl border border-gray-200 hover:bg-gray-50 text-lg font-semibold transition-all">+</button>
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                            class="w-full bg-accent hover:bg-vermilion text-white py-3.5 rounded-xl font-bold text-sm transition-all shadow-lg shadow-accent/20 hover:shadow-accent/30">
+                        {% trans "加入购物车" %}
+                    </button>
+                </form>
+                {% else %}
+                <div class="p-6 sm:p-8">
+                    <a href="{% url 'login' %}?next={{ request.path }}"
+                       class="block text-center bg-accent hover:bg-vermilion text-white py-3.5 rounded-xl font-bold text-sm transition-all shadow-lg shadow-accent/20">
+                        {% trans "登录后加入购物车" %}
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

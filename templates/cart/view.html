@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "购物车" %} - Japan Travel{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div class="flex items-center gap-3 mb-8">
+        <span class="text-3xl">🛒</span>
+        <div>
+            <h1 class="text-2xl sm:text-3xl font-black text-gray-900">{% trans "购物车" %}</h1>
+            <p class="text-sm text-gray-500">{% trans "确认您的预订项目" %}</p>
+        </div>
+    </div>
+
+    {% if items %}
+    <div class="space-y-4 mb-6">
+        {% for item in items %}
+        <div class="card-hover bg-white rounded-2xl p-4 sm:p-6 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.06)] border border-gray-50">
+            <div class="flex items-center gap-4 sm:gap-6">
+                <!-- Thumb -->
+                <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shrink-0 bg-gray-100">
+                    {% if item.product.images.all %}
+                    <img src="{{ item.product.images.first.image.url }}" alt="{{ item.product.title_zh }}" class="w-full h-full object-cover">
+                    {% else %}
+                    <div class="w-full h-full flex items-center justify-center text-gray-300 text-2xl">🏯</div>
+                    {% endif %}
+                </div>
+                <!-- Info -->
+                <div class="flex-1 min-w-0">
+                    <p class="font-bold text-gray-800">{{ item.product.title_zh }}</p>
+                    <div class="flex items-center gap-3 mt-1 text-sm text-gray-500">
+                        <span>📅 {{ item.booking_date }}</span>
+                        <span>👥 x{{ item.quantity }}</span>
+                        <span>¥{{ item.price }}/{% trans "位" %}</span>
+                    </div>
+                </div>
+                <!-- Price & Remove -->
+                <div class="text-right shrink-0">
+                    <p class="text-xl font-black text-accent">¥{{ item.total_price }}</p>
+                    <a href="{% url 'cart_remove' item.id %}"
+                       class="inline-block mt-2 text-xs text-gray-400 hover:text-accent transition-colors">
+                        {% trans "删除" %}
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Summary -->
+    <div class="bg-white rounded-2xl p-6 sm:p-8 shadow-[0_8px_24px_-6px_rgba(0,0,0,0.06)] border border-gray-50 mb-6">
+        <div class="flex items-center justify-between text-base mb-3">
+            <span class="text-gray-600">{% trans "小计" %}</span>
+            <span class="text-gray-800 font-semibold">¥{{ total }}</span>
+        </div>
+        <div class="flex items-center justify-between text-base mb-3">
+            <span class="text-gray-600">{% trans "税费" %}</span>
+            <span class="text-gray-400">{% trans "已含" %}</span>
+        </div>
+        <div class="border-t border-gray-100 pt-3 flex items-center justify-between text-xl font-black">
+            <span>{% trans "合计" %}</span>
+            <span class="text-accent">¥{{ total }}</span>
+        </div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3">
+        <a href="{% url 'cart_checkout' %}"
+           class="flex-1 text-center bg-accent hover:bg-vermilion text-white py-3.5 rounded-xl font-bold transition-all shadow-lg shadow-accent/20">
+            {% trans "去结算" %}
+        </a>
+        <a href="{% url 'product_list' %}"
+           class="flex-1 text-center border-2 border-gray-200 hover:border-gray-300 text-gray-700 hover:text-gray-900 py-3.5 rounded-xl font-semibold transition-all">
+            {% trans "继续购物" %}
+        </a>
+    </div>
+
+    {% else %}
+    <div class="text-center py-24">
+        <p class="text-7xl mb-6">🛒</p>
+        <p class="text-2xl font-bold text-gray-800 mb-2">{% trans "购物车是空的" %}</p>
+        <p class="text-gray-500 mb-8">{% trans "去看看有哪些精彩的日本体验吧" %}</p>
+        <a href="{% url 'product_list' %}"
+           class="inline-flex items-center gap-2 bg-accent hover:bg-vermilion text-white px-8 py-3.5 rounded-xl font-bold transition-all shadow-lg shadow-accent/20">
+            {% trans "浏览体验" %} →
+        </a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
