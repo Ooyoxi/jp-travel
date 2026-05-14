@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}
+{% if person %}{{ person }} - {% elif tag %}#{{ tag }} - {% endif %}{% trans "文章" %} - QuantBase
+{% endblock %}
+
+{% block content %}
+<div class="bg-white border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <h1 class="text-2xl font-black text-gray-900">
+            {% if person %}{% trans "人物" %}: {{ person }}
+            {% elif tag %}#{{ tag }}
+            {% else %}{% trans "信息流" %}
+            {% endif %}
+        </h1>
+        <a href="{% url 'market:market_home' %}" class="text-xs text-accent hover:underline mt-1 inline-block">← {% trans "返回市场首页" %}</a>
+    </div>
+</div>
+
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    {% if articles %}
+    <div class="space-y-2">
+        {% for article in articles %}
+        <a href="{% url 'market:article_detail' article.pk %}" class="block card-hover bg-card rounded-xl p-4 border border-gray-200/80">
+            <h2 class="text-sm font-semibold text-gray-900">{{ article.title }}</h2>
+            <div class="flex items-center gap-2 mt-1.5 text-xs text-gray-400 flex-wrap">
+                {% if article.source_name %}<span>{{ article.source_name }}</span>{% endif %}
+                {% if article.author %}<span>· {{ article.author }}</span>{% endif %}
+                <span>· {{ article.published_at|date:"Y-m-d"|default:article.created_at|date:"Y-m-d" }}</span>
+                {% if article.is_favorite %}<span class="text-gold">⭐</span>{% endif %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-card rounded-xl p-12 text-center border border-dashed border-gray-200">
+        <p class="text-4xl mb-4">🔍</p>
+        <p class="text-gray-500 text-sm">{% trans "没有找到文章" %}</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

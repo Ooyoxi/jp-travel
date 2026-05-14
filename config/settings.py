@@ -14,10 +14,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "products",
-    "booking",
-    "cart",
-    "payment",
+    "notes",
+    "strategies",
+    "market",
     "accounts",
 ]
 
@@ -74,8 +73,6 @@ USE_TZ = True
 
 LANGUAGES = [
     ("zh-hans", "中文"),
-    ("ja", "日本語"),
-    ("en", "English"),
 ]
 
 LOCALE_PATHS = [BASE_DIR / "locales"]

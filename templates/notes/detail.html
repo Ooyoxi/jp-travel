@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ note.title }} - QuantBase{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- Breadcrumb -->
+    <div class="text-xs text-gray-400 mb-4">
+        <a href="{% url 'notes:home' %}" class="hover:text-accent">{% trans "首页" %}</a>
+        <span class="mx-1">/</span>
+        <a href="{% url 'notes:note_list' %}" class="hover:text-accent">{% trans "学习笔记" %}</a>
+        {% if note.category %}
+        <span class="mx-1">/</span>
+        <a href="{% url 'notes:note_list' %}?category={{ note.category.slug }}" class="hover:text-accent">{{ note.category.name }}</a>
+        {% endif %}
+    </div>
+
+    <!-- Header -->
+    <article>
+        <h1 class="text-2xl sm:text-3xl font-black text-gray-900 mb-3">{{ note.title }}</h1>
+
+        <div class="flex items-center gap-3 text-xs text-gray-400 mb-6 pb-6 border-b border-gray-100">
+            <span>{{ note.created_at|date:"Y-m-d" }}</span>
+            {% if note.updated_at != note.created_at %}
+            <span>{% trans "更新于" %} {{ note.updated_at|date:"Y-m-d" }}</span>
+            {% endif %}
+            {% if note.category %}
+            <span class="bg-gray-100 text-gray-500 px-2 py-0.5 rounded">{{ note.category.name }}</span>
+            {% endif %}
+            {% for tag in note.tag_list %}
+            <span class="bg-emerald-50 text-accent px-2 py-0.5 rounded">#{{ tag }}</span>
+            {% endfor %}
+        </div>
+
+        <!-- Content -->
+        <div class="md-content">
+            {{ note.content_md|linebreaks }}
+        </div>
+    </article>
+
+    <!-- Navigation -->
+    <div class="mt-12 pt-6 border-t border-gray-100">
+        <a href="{% url 'notes:note_list' %}" class="text-sm text-accent hover:underline">← {% trans "返回笔记列表" %}</a>
+    </div>
+</div>
+{% endblock %}

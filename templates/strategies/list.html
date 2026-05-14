@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "策略库" %} - QuantBase{% endblock %}
+
+{% block content %}
+<div class="bg-white border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <h1 class="text-2xl font-black text-gray-900">{% trans "📊 策略库" %}</h1>
+        <p class="text-sm text-gray-500 mt-1">{% trans "量化策略研究与回测记录" %}</p>
+    </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    {% if strategies %}
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {% for strategy in strategies %}
+        <a href="{% url 'strategies:strategy_detail' strategy.slug %}" class="card-hover bg-card rounded-xl p-5 border border-gray-200/80">
+            <h2 class="font-bold text-gray-900 text-base">{{ strategy.name }}</h2>
+            {% if strategy.description %}
+            <p class="text-sm text-gray-500 mt-1 line-clamp-2">{{ strategy.description }}</p>
+            {% endif %}
+            <div class="flex items-center gap-3 mt-4 text-xs text-gray-400">
+                {% with result=strategy.results.first %}
+                {% if result %}
+                <span>{% trans "回测" %}: {{ result.date|date:"Y-m-d" }}</span>
+                {% if result.sharpe_ratio %}
+                <span>Sharpe: {{ result.sharpe_ratio|floatformat:2 }}</span>
+                {% endif %}
+                {% endif %}
+                {% endwith %}
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="bg-card rounded-xl p-12 text-center border border-dashed border-gray-200">
+        <p class="text-4xl mb-4">📊</p>
+        <p class="text-gray-500">{% trans "还没有策略" %}</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

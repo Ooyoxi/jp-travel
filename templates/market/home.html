@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "每日市场" %} - QuantBase{% endblock %}
+
+{% block content %}
+<div class="bg-white border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-black text-gray-900">{% trans "📰 每日市场" %}</h1>
+                <p class="text-sm text-gray-500 mt-1">{% trans "科技大佬观点 · 行业前瞻 · 信息聚合" %}</p>
+            </div>
+            {% if user.is_staff %}
+            <form method="post" action="{% url 'market:fetch_rss' %}">
+                {% csrf_token %}
+                <button type="submit"
+                        class="px-3 py-1.5 bg-primary text-white rounded-lg text-xs font-medium hover:bg-secondary transition-all">
+                    {% trans "📡 采集 RSS" %}
+                </button>
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+
+        <!-- Left: People index -->
+        <aside class="lg:col-span-1">
+            <div class="lg:sticky lg:top-20 space-y-4">
+                <!-- People -->
+                <div class="bg-card rounded-xl p-4 border border-gray-200/80">
+                    <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider mb-3">{% trans "👤 关注人物" %}</h3>
+                    {% if all_people %}
+                    <div class="flex flex-wrap gap-1.5">
+                        {% for person in all_people %}
+                        <a href="{% url 'market:by_person' person %}"
+                           class="text-xs bg-gray-100 text-gray-600 hover:bg-accent hover:text-white px-2 py-1 rounded transition-all">
+                            {{ person }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p class="text-xs text-gray-400">{% trans "暂无" %}</p>
+                    {% endif %}
+                </div>
+
+                <!-- Snapshots archive -->
+                {% if snapshots %}
+                <div class="bg-card rounded-xl p-4 border border-gray-200/80">
+                    <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider mb-3">{% trans "📅 每日快照" %}</h3>
+                    <div class="space-y-1">
+                        {% for snap in snapshots %}
+                        <a href="#" class="block text-xs text-gray-500 hover:text-accent py-1">
+                            {{ snap.date|date:"Y-m-d" }} — {{ snap.title|truncatechars:20 }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </aside>
+
+        <!-- Main: Articles -->
+        <div class="lg:col-span-3">
+
+            <!-- Favorites -->
+            {% if featured_articles %}
+            <div class="mb-8">
+                <h2 class="text-sm font-bold text-gray-800 mb-3">{% trans "⭐ 收藏" %}</h2>
+                <div class="space-y-2">
+                    {% for article in featured_articles %}
+                    <a href="{% url 'market:article_detail' article.pk %}" class="block card-hover bg-card rounded-xl p-4 border border-gray-200/80">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="min-w-0">
+                                <h3 class="text-sm font-semibold text-gray-900">{{ article.title }}</h3>
+                                <div class="flex items-center gap-2 mt-1.5 text-xs text-gray-400 flex-wrap">
+                                    {% if article.author %}<span>{{ article.author }}</span>{% endif %}
+                                    {% if article.source_name %}<span>· {{ article.source_name }}</span>{% endif %}
+                                    <span>· {{ article.published_at|date:"Y-m-d"|default:article.created_at|date:"Y-m-d" }}</span>
+                                </div>
+                                {% if article.summary %}
+                                <p class="text-xs text-gray-500 mt-2 line-clamp-2">{{ article.summary }}</p>
+                                {% endif %}
+                            </div>
+                            <span class="text-gold shrink-0">⭐</span>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- All articles -->
+            <div>
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-sm font-bold text-gray-800">{% trans "📋 信息流" %}</h2>
+                    <a href="{% url 'market:article_list' %}" class="text-xs text-accent hover:underline">{% trans "查看全部 →" %}</a>
+                </div>
+
+                {% if latest_articles %}
+                <div class="space-y-2">
+                    {% for article in latest_articles %}
+                    <a href="{% url 'market:article_detail' article.pk %}" class="block card-hover bg-card rounded-xl p-4 border border-gray-200/80">
+                        <div class="flex items-start justify-between gap-3">
+                            <div class="min-w-0">
+                                <h3 class="text-sm font-semibold text-gray-900">{{ article.title }}</h3>
+                                <div class="flex items-center gap-2 mt-1.5 text-xs text-gray-400 flex-wrap">
+                                    {% if article.source_name %}<span>{{ article.source_name }}</span>{% endif %}
+                                    {% if article.author %}<span>· {{ article.author }}</span>{% endif %}
+                                    <span>· {{ article.published_at|date:"Y-m-d"|default:article.created_at|date:"Y-m-d" }}</span>
+                                    {% if article.is_favorite %}<span class="text-gold">⭐</span>{% endif %}
+                                </div>
+                                {% if article.summary %}
+                                <p class="text-xs text-gray-500 mt-2 line-clamp-2">{{ article.summary }}</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="bg-card rounded-xl p-12 text-center border border-dashed border-gray-200">
+                    <p class="text-4xl mb-4">📰</p>
+                    <p class="text-gray-500 text-sm">{% trans "还没有信息" %}</p>
+                    <p class="text-xs text-gray-400 mt-1">{% trans "通过管理后台添加文章，或配置 RSS 自动采集" %}</p>
+                    <a href="{% url 'admin:market_article_add' %}" class="inline-block mt-3 text-xs text-accent hover:underline">{% trans "添加文章 →" %}</a>
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

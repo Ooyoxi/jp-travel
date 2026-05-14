@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ strategy.name }} - {% trans "代码" %} - QuantBase{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    <div class="flex items-center justify-between mb-4">
+        <div class="text-xs text-gray-400">
+            <a href="{% url 'strategies:strategy_list' %}" class="hover:text-accent">{% trans "策略库" %}</a>
+            <span class="mx-1">/</span>
+            <a href="{% url 'strategies:strategy_detail' strategy.slug %}" class="hover:text-accent">{{ strategy.name }}</a>
+            <span class="mx-1">/</span>
+            <span>{% trans "代码" %}</span>
+        </div>
+        <div class="text-xs text-gray-400">
+            {{ filename }} · {{ lines }} {% trans "行" %}
+        </div>
+    </div>
+
+    <div class="bg-[#0f172a] rounded-xl overflow-hidden border border-gray-700/50">
+        <div class="flex items-center justify-between px-4 py-2 bg-[#1e293b] border-b border-gray-700/50">
+            <span class="text-xs text-gray-400 font-mono">{{ filename }}</span>
+            <button onclick="navigator.clipboard.writeText(document.getElementById('source-code').textContent)"
+                    class="text-xs text-gray-400 hover:text-white transition-colors">
+                {% trans "复制代码" %}
+            </button>
+        </div>
+        <pre class="overflow-x-auto p-4 text-sm leading-relaxed font-mono" style="tab-size: 4;"><code id="source-code" class="text-gray-300">{% for line in source_lines %}<span class="text-gray-600 select-none mr-4">{{ forloop.counter }}</span>{{ line }}<br>{% endfor %}</code></pre>
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'strategies:strategy_detail' strategy.slug %}" class="text-xs text-accent hover:underline">← {% trans "返回策略详情" %}</a>
+    </div>
+</div>
+{% endblock %}

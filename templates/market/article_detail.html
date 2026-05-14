@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ article.title }} - QuantBase{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- Breadcrumb -->
+    <div class="text-xs text-gray-400 mb-4">
+        <a href="{% url 'notes:home' %}" class="hover:text-accent">{% trans "首页" %}</a>
+        <span class="mx-1">/</span>
+        <a href="{% url 'market:market_home' %}" class="hover:text-accent">{% trans "每日市场" %}</a>
+    </div>
+
+    <article>
+        <h1 class="text-2xl font-black text-gray-900 mb-2 leading-tight">{{ article.title }}</h1>
+
+        <!-- Publish time -->
+        <div class="text-sm text-gray-400 mb-4">
+            {{ article.published_at|date:"Y-m-d H:i"|default:article.created_at|date:"Y-m-d H:i" }}
+        </div>
+
+        <!-- Meta -->
+        <div class="flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-gray-400 mb-6 pb-6 border-b border-gray-100">
+            {% if article.source_name %}
+            <span class="font-medium text-gray-500">{{ article.source_name }}</span>
+            {% endif %}
+            {% if article.author %}
+            <span>{{ article.author }}</span>
+            {% endif %}
+            <span>{{ article.published_at|date:"Y-m-d"|default:article.created_at|date:"Y-m-d" }}</span>
+            {% if article.url %}
+            <a href="{{ article.url }}" target="_blank" rel="noopener"
+               class="text-accent hover:underline">原文链接 →</a>
+            {% endif %}
+        </div>
+
+        <!-- Tags -->
+        {% if article.tag_list or article.people_list %}
+        <div class="flex flex-wrap gap-1.5 mb-6">
+            {% for tag in article.tag_list %}
+            <a href="{% url 'market:by_tag' tag %}" class="text-xs bg-emerald-50 text-accent px-2 py-0.5 rounded">#{{ tag }}</a>
+            {% endfor %}
+            {% for person in article.people_list %}
+            <a href="{% url 'market:by_person' person %}" class="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded">{{ person }}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Chinese Translation -->
+        {% if article.content_translated %}
+        <div class="article-content text-gray-800">
+            {{ article.content_translated|linebreaks }}
+        </div>
+        <div class="my-6 border-t border-gray-100"></div>
+        {% endif %}
+
+        <!-- English Original -->
+        {% if article.content_text %}
+        <div>
+            {% if article.content_translated %}
+            <div class="text-xs text-gray-400 mb-3 font-medium">English Original</div>
+            {% endif %}
+            <div class="article-content text-gray-500">
+                {{ article.content_text|linebreaks }}
+            </div>
+        </div>
+        {% elif article.summary %}
+        <div class="article-content text-gray-500">
+            {{ article.summary|linebreaks }}
+        </div>
+        {% endif %}
+    </article>
+
+    <div class="mt-10 pt-6 border-t border-gray-100">
+        <a href="{% url 'market:market_home' %}" class="text-sm text-accent hover:underline">← {% trans "返回市场首页" %}</a>
+    </div>
+</div>
+{% endblock %}

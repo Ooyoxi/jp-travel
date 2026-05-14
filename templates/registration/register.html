@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "注册" %} - QuantBase{% endblock %}
+
+{% block content %}
+<div class="min-h-[60vh] flex items-center justify-center px-4">
+    <div class="w-full max-w-sm">
+        <div class="bg-card rounded-xl p-6 border border-gray-200/80 shadow-sm">
+            <h1 class="text-xl font-black text-gray-900 text-center mb-6">{% trans "注册" %}</h1>
+            <form method="post" class="space-y-4">
+                {% csrf_token %}
+                <div>
+                    <label class="text-xs font-medium text-gray-600 block mb-1">{% trans "用户名" %}</label>
+                    <input type="text" name="username" required
+                           class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-accent/30 focus:border-accent outline-none">
+                </div>
+                <div>
+                    <label class="text-xs font-medium text-gray-600 block mb-1">{% trans "密码" %}</label>
+                    <input type="password" name="password1" required
+                           class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-accent/30 focus:border-accent outline-none">
+                </div>
+                <div>
+                    <label class="text-xs font-medium text-gray-600 block mb-1">{% trans "确认密码" %}</label>
+                    <input type="password" name="password2" required
+                           class="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-accent/30 focus:border-accent outline-none">
+                </div>
+                {% if form.errors %}
+                <div class="text-xs text-red-500 space-y-1">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}<p>{{ error }}</p>{% endfor %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <button type="submit"
+                        class="w-full py-2.5 bg-accent text-white rounded-lg text-sm font-semibold hover:bg-emerald-600 transition-all">
+                    {% trans "注册" %}
+                </button>
+            </form>
+            <p class="text-xs text-gray-400 text-center mt-4">
+                {% trans "已有账号？" %}
+                <a href="{% url 'accounts:login' %}" class="text-accent hover:underline">{% trans "登录" %}</a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

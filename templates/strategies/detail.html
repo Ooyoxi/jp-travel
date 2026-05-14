@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{{ strategy.name }} - QuantBase{% endblock %}
+
+{% block content %}
+<div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+    <!-- Breadcrumb -->
+    <div class="text-xs text-gray-400 mb-4">
+        <a href="{% url 'notes:home' %}" class="hover:text-accent">{% trans "首页" %}</a>
+        <span class="mx-1">/</span>
+        <a href="{% url 'strategies:strategy_list' %}" class="hover:text-accent">{% trans "策略库" %}</a>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        <!-- Main content -->
+        <div class="lg:col-span-2">
+            <h1 class="text-2xl sm:text-3xl font-black text-gray-900 mb-2">{{ strategy.name }}</h1>
+            {% if strategy.description %}
+            <p class="text-gray-500 mb-6">{{ strategy.description }}</p>
+            {% endif %}
+
+            {% if strategy.content_md %}
+            <div class="md-content">
+                {{ strategy.content_md|linebreaks }}
+            </div>
+            {% endif %}
+
+            <div class="mt-6">
+                <a href="{% url 'strategies:strategy_code' strategy.slug %}"
+                   class="inline-flex items-center gap-1 text-sm text-accent hover:underline">
+                    {% trans "查看完整代码 →" %}
+                </a>
+            </div>
+        </div>
+
+        <!-- Sidebar: Metrics & Signals -->
+        <div class="space-y-4">
+
+            {% if user.is_staff %}
+            <!-- Run Strategy -->
+            <div class="bg-card rounded-xl p-4 border border-gray-200/80">
+                <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider mb-3">{% trans "⚡ 操作" %}</h3>
+                <form method="post" action="{% url 'strategies:run_strategy' strategy.slug %}">
+                    {% csrf_token %}
+                    <button type="submit"
+                            class="w-full py-2 bg-primary text-white rounded-lg text-xs font-semibold hover:bg-secondary transition-all">
+                        {% trans "运行策略" %}
+                    </button>
+                    <p class="text-[10px] text-gray-400 mt-1.5">{% trans "从 tushare 获取最新数据，更新回测结果和信号" %}</p>
+                </form>
+            </div>
+            {% endif %}
+
+            <!-- Latest Signal -->
+            {% if latest_signal %}
+            <div class="bg-card rounded-xl p-4 border border-gray-200/80">
+                <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider mb-3">{% trans "📡 最新信号" %}</h3>
+                <div class="text-sm text-gray-700">{{ latest_signal.summary }}</div>
+                <div class="text-xs text-gray-400 mt-2">{{ latest_signal.date }}</div>
+            </div>
+            {% endif %}
+
+            <!-- Backtest Results -->
+            {% if results %}
+            <div class="bg-card rounded-xl p-4 border border-gray-200/80">
+                <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider mb-3">{% trans "📈 回测表现" %}</h3>
+                <div class="space-y-3">
+                    {% for r in results %}
+                    <div class="border-b border-gray-50 pb-3 last:border-0 last:pb-0">
+                        <div class="text-xs text-gray-400 mb-2">{{ r.date|date:"Y-m-d" }}</div>
+                        <div class="grid grid-cols-2 gap-2 text-xs">
+                            {% if r.annual_return %}
+                            <div>
+                                <span class="text-gray-400">{% trans "年化收益" %}</span>
+                                <span class="float-right font-mono font-semibold {% if r.annual_return > 0 %}up{% else %}down{% endif %}">
+                                    {{ r.annual_return|floatformat:1 }}%
+                                </span>
+                            </div>
+                            {% endif %}
+                            {% if r.sharpe_ratio %}
+                            <div>
+                                <span class="text-gray-400">Sharpe</span>
+                                <span class="float-right font-mono font-semibold">{{ r.sharpe_ratio|floatformat:2 }}</span>
+                            </div>
+                            {% endif %}
+                            {% if r.max_drawdown %}
+                            <div>
+                                <span class="text-gray-400">{% trans "最大回撤" %}</span>
+                                <span class="float-right font-mono font-semibold down">{{ r.max_drawdown|floatformat:1 }}%</span>
+                            </div>
+                            {% endif %}
+                            {% if r.win_rate %}
+                            <div>
+                                <span class="text-gray-400">{% trans "胜率" %}</span>
+                                <span class="float-right font-mono font-semibold">{{ r.win_rate|floatformat:1 }}%</span>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

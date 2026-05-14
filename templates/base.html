@@ -4,155 +4,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Japan Travel{% endblock %}</title>
+    <title>{% block title %}QuantBase{% endblock %}</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&family=Noto+Sans+JP:wght@400;500;700;900&family=Noto+Sans:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700;900&family=Noto+Sans:wght@400;500;600;700;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primary: '#1a365d',
-                        accent: '#c53030',
-                        vermilion: '#e53e3e',
-                        gold: '#b7791f',
-                        indigo: '#2c5282',
-                        sake: '#fefcf5',
+                        primary: '#0f172a',
+                        secondary: '#1e293b',
+                        accent: '#059669',
+                        danger: '#dc2626',
+                        gold: '#d97706',
+                        'surface': '#f8fafc',
+                        'card': '#ffffff',
                     },
                     fontFamily: {
-                        sans: ['Noto Sans SC', 'Noto Sans JP', 'Noto Sans', 'sans-serif'],
+                        sans: ['Noto Sans SC', 'Noto Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
                     },
                 }
             }
         }
     </script>
     <style>
-        .hero-gradient {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-        }
-        .japan-pattern {
-            background-image: radial-gradient(circle at 1px 1px, rgba(255,255,255,0.05) 1px, transparent 0);
-            background-size: 40px 40px;
-        }
         .card-hover {
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.1);
         }
-        .img-placeholder {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-        .smooth-scroll {
-            scroll-behavior: smooth;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-            animation: fadeIn 0.8s ease-out forwards;
-        }
+        .up { color: #dc2626; }
+        .down { color: #059669; }
+        .smooth-scroll { scroll-behavior: smooth; }
 
-        /* Mobile lang select styling */
-        .lang-select {
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23666'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 6px center;
-            padding-right: 22px;
-        }
-        .lang-select option {
-            text-align: left;
-        }
+        /* Markdown content styling */
+        .md-content h1 { font-size: 1.75rem; font-weight: 800; margin-top: 2rem; margin-bottom: 0.75rem; color: #0f172a; }
+        .md-content h2 { font-size: 1.4rem; font-weight: 700; margin-top: 1.75rem; margin-bottom: 0.5rem; color: #1e293b; padding-bottom: 0.3rem; border-bottom: 1px solid #e2e8f0; }
+        .md-content h3 { font-size: 1.15rem; font-weight: 600; margin-top: 1.25rem; margin-bottom: 0.5rem; color: #334155; }
+        .md-content p { margin-bottom: 0.75rem; line-height: 1.8; color: #475569; }
+        .md-content ul, .md-content ol { margin-bottom: 0.75rem; padding-left: 1.5rem; }
+        .md-content li { margin-bottom: 0.25rem; line-height: 1.7; color: #475569; }
+        .md-content code { font-family: 'JetBrains Mono', monospace; background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.875rem; color: #dc2626; }
+        .md-content pre { background: #0f172a; color: #e2e8f0; padding: 1rem; border-radius: 8px; overflow-x: auto; margin-bottom: 1rem; }
+        .md-content pre code { background: none; color: #e2e8f0; padding: 0; font-size: 0.8rem; }
+        .md-content blockquote { border-left: 3px solid #059669; padding-left: 1rem; margin: 1rem 0; color: #64748b; background: #f1f5f9; padding: 0.75rem 1rem; border-radius: 0 6px 6px 0; }
+        .md-content table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: 0.9rem; }
+        .md-content th { background: #f1f5f9; padding: 0.5rem 0.75rem; text-align: left; font-weight: 600; border: 1px solid #e2e8f0; }
+        .md-content td { padding: 0.5rem 0.75rem; border: 1px solid #e2e8f0; }
+        .md-content img { max-width: 100%; border-radius: 8px; margin: 1rem 0; }
+        .md-content a { color: #059669; text-decoration: underline; }
+        .md-content a:hover { color: #047857; }
+
+        /* Article content (RSS full text) */
+        .article-content p { margin-bottom: 1rem; line-height: 1.85; font-size: 0.95rem; }
+        .article-content br { display: block; content: ""; margin-top: 0.5rem; }
     </style>
-    <script>
-        function changeLanguage(langCode) {
-            var form = document.getElementById('lang-form');
-            var select = document.getElementById('lang-select');
-            document.getElementById('lang-input').value = langCode;
-            // Add loading state
-            if (select) {
-                select.classList.add('opacity-50', 'pointer-events-none');
-                select.style.backgroundImage = 'url("data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2720%27 height=%2720%27 viewBox=%270 0 50 50%27%3E%3Cpath fill=%27%23666%27 d=%27M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z%27%3E%3CanimateTransform attributeType=%27xml%27 attributeName=%27transform%27 type=%27rotate%27 from=%270 25 25%27 to=%27360 25 25%27 dur=%270.6s%27 repeatCount=%27indefinite%27/%3E%3C/path%3E%3C/svg%3E")';
-                select.style.backgroundSize = '16px';
-            }
-            form.submit();
-        }
-    </script>
 </head>
-<body class="bg-[#fefcf5] min-h-screen flex flex-col smooth-scroll font-sans antialiased">
+<body class="bg-surface min-h-screen flex flex-col smooth-scroll font-sans antialiased">
 
     <!-- Header -->
-    <header class="bg-white/95 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50">
+    <header class="bg-primary border-b border-secondary/20 sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
+            <div class="flex items-center justify-between h-14">
                 <!-- Logo -->
-                <a href="{% url 'home' %}" class="flex items-center gap-2 group">
-                    <span class="text-2xl">⛩️</span>
-                    <span class="text-xl font-black text-primary tracking-tight group-hover:text-accent transition-colors">
-                        Japan Travel
+                <a href="{% url 'notes:home' %}" class="flex items-center gap-2 group">
+                    <span class="text-xl font-black text-emerald-400 tracking-tight font-mono">
+                        QuantBase
                     </span>
                 </a>
 
-                <!-- Nav -->
-                <nav class="flex items-center gap-0.5 sm:gap-3 text-xs sm:text-sm font-medium">
-                    <a href="{% url 'cart_view' %}"
-                       class="px-3 py-2 rounded-lg text-gray-600 hover:text-primary hover:bg-gray-50 transition-all relative">
-                        <span class="hidden sm:inline">{% trans "购物车" %}</span>
-                        <span class="sm:hidden">🛒</span>
-                        {% with cart_count=request.user.cart_items.count %}
-                            {% if user.is_authenticated and cart_count %}
-                            <span class="absolute -top-0.5 -right-0.5 bg-accent text-white text-[10px] font-bold rounded-full min-w-[18px] h-[18px] flex items-center justify-center px-1 shadow-sm">
-                                {{ cart_count }}
-                            </span>
-                            {% endif %}
-                        {% endwith %}
-                    </a>
+                <!-- Desktop Nav -->
+                <nav class="hidden md:flex items-center gap-1">
+                    <a href="{% url 'notes:home' %}"
+                       class="px-3 py-1.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition-all">{% trans "首页" %}</a>
+                    <a href="{% url 'notes:note_list' %}"
+                       class="px-3 py-1.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition-all">{% trans "学习笔记" %}</a>
+                    <a href="{% url 'strategies:strategy_list' %}"
+                       class="px-3 py-1.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition-all">{% trans "策略库" %}</a>
+                    <a href="{% url 'market:market_home' %}"
+                       class="px-3 py-1.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition-all">{% trans "每日市场" %}</a>
+                </nav>
+
+                <!-- Right side -->
+                <div class="flex items-center gap-2">
 
                     {% if user.is_authenticated %}
-                    <a href="{% url 'profile' %}"
-                       class="px-2 sm:px-3 py-2 rounded-lg text-gray-600 hover:text-primary hover:bg-gray-50 transition-all whitespace-nowrap">
-                        <span class="hidden sm:inline">{{ user.username }}</span>
-                        <span class="sm:hidden">👤</span>
-                    </a>
-                    <a href="{% url 'logout' %}"
-                       class="px-2 sm:px-3 py-2 rounded-lg text-gray-400 hover:text-accent hover:bg-red-50 transition-all whitespace-nowrap">
-                        <span class="hidden sm:inline">{% trans "退出" %}</span>
-                        <span class="sm:hidden">🚪</span>
-                    </a>
-                    {% else %}
-                    <a href="{% url 'login' %}"
-                       class="px-2 sm:px-4 py-2 rounded-lg text-primary hover:bg-primary/5 transition-all whitespace-nowrap">{% trans "登录" %}</a>
-                    <a href="{% url 'register' %}"
-                       class="px-3 sm:px-4 py-2 rounded-lg bg-accent text-white hover:bg-vermilion transition-all shadow-sm shadow-accent/20 whitespace-nowrap">
-                        {% trans "注册" %}
-                    </a>
+                    <a href="{% url 'admin:index' %}"
+                       class="px-3 py-1.5 rounded-lg text-xs font-medium bg-accent/10 text-accent hover:bg-accent/20 transition-all">{% trans "管理" %}</a>
+                    <a href="{% url 'accounts:logout' %}"
+                       class="px-2 py-1.5 rounded-lg text-xs text-gray-400 hover:text-white transition-all">{% trans "退出" %}</a>
                     {% endif %}
 
-                    <!-- Language Switcher -->
-                    <div class="relative ml-1 sm:ml-2 border-l border-gray-200 pl-2 sm:pl-3">
-                        {% get_current_language as LANG %}
-                        {% get_available_languages as LANGUAGES %}
-                        <form action="{% url 'set_language' %}" method="post" id="lang-form">
-                            {% csrf_token %}
-                            <input type="hidden" name="next" value="{{ request.path }}">
-                            <input type="hidden" name="language" id="lang-input" value="{{ LANG }}">
-                        </form>
-                        <select id="lang-select" class="lang-select text-xs py-1.5 pl-2 pr-6 rounded-lg border border-gray-200 bg-white text-gray-600 focus:ring-2 focus:ring-accent/30 focus:border-accent cursor-pointer transition-all duration-200"
-                                onchange="changeLanguage(this.value)">
-                            {% for lang_code, lang_name in LANGUAGES %}
-                            <option value="{{ lang_code }}" {% if lang_code == LANGUAGE_CODE %}selected{% endif %}>
-                                {% if lang_code == "zh-hans" %}🇨🇳 中文{% elif lang_code == "ja" %}🇯🇵 日本語{% else %}🇬🇧 English{% endif %}
-                            </option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                </nav>
+                    <!-- Mobile menu toggle -->
+                    <button id="mobile-menu-btn" class="md:hidden text-gray-300 p-1" onclick="toggleMobileMenu()">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Nav -->
+            <div id="mobile-menu" class="hidden md:hidden pb-3 border-t border-white/10 pt-2">
+                <a href="{% url 'notes:home' %}" class="block px-3 py-2 rounded text-sm text-gray-300 hover:text-white hover:bg-white/10">{% trans "首页" %}</a>
+                <a href="{% url 'notes:note_list' %}" class="block px-3 py-2 rounded text-sm text-gray-300 hover:text-white hover:bg-white/10">{% trans "学习笔记" %}</a>
+                <a href="{% url 'strategies:strategy_list' %}" class="block px-3 py-2 rounded text-sm text-gray-300 hover:text-white hover:bg-white/10">{% trans "策略库" %}</a>
+                <a href="{% url 'market:market_home' %}" class="block px-3 py-2 rounded text-sm text-gray-300 hover:text-white hover:bg-white/10">{% trans "每日市场" %}</a>
             </div>
         </div>
     </header>
@@ -177,37 +138,25 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-[#1a1a2e] text-gray-400 mt-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div class="md:col-span-2">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="text-2xl">⛩️</span>
-                        <span class="text-xl font-bold text-white">Japan Travel</span>
-                    </div>
-                    <p class="text-sm leading-relaxed max-w-md">
-                        {% trans "精选日本各地独特体验，为您打造难忘的日本之旅。" %}
-                    </p>
+    <footer class="bg-primary text-gray-400 mt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <span class="font-bold text-emerald-400 font-mono">QuantBase</span>
+                    <span class="text-xs text-gray-500">|</span>
+                    <span class="text-xs text-gray-500">{% trans "量化学习与投资记录" %}</span>
                 </div>
-                <div>
-                    <h4 class="font-semibold text-white mb-3 text-sm uppercase tracking-wider">{% trans "浏览" %}</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="{% url 'product_list' %}" class="hover:text-white transition-colors">{% trans "所有体验" %}</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">{% trans "热门目的地" %}</a></li>
-                    </ul>
+                <div class="text-xs text-gray-500">
+                    &copy; {% now "Y" %} QuantBase
                 </div>
-                <div>
-                    <h4 class="font-semibold text-white mb-3 text-sm uppercase tracking-wider">{% trans "支持" %}</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="hover:text-white transition-colors">{% trans "帮助中心" %}</a></li>
-                        <li><a href="#" class="hover:text-white transition-colors">{% trans "取消政策" %}</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="border-t border-gray-700/50 mt-8 pt-8 text-center text-sm">
-                <p>&copy; 2026 Japan Travel. All rights reserved.</p>
             </div>
         </div>
     </footer>
+
+    <script>
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+    </script>
 </body>
 </html>
