@@ -72,3 +72,22 @@ def strategy_detail(request, slug):
         "results": results,
         "latest_signal": latest_signal,
     })
+
+
+from datetime import datetime
+from . import box_strategy as bs
+
+
+def box_strategy_view(request):
+    """个股箱体策略分析页面"""
+    results = None
+    error = None
+    try:
+        results = bs.run_analysis()
+    except Exception as e:
+        error = str(e)
+    return render(request, "strategies/box_strategy.html", {
+        "results": results,
+        "error": error,
+        "analysis_date": datetime.now(),
+    })

@@ -1,9 +1,12 @@
-import sys, subprocess
+import sys, subprocess, logging
 from django.shortcuts import render, get_object_or_404, redirect
 from django.conf import settings
 from django.contrib import messages
 from django.utils.translation import gettext as _
 from .models import DailySnapshot, Article
+from .market_data import fetch_market_news
+
+logger = logging.getLogger(__name__)
 
 
 def market_home(request):
@@ -22,11 +25,36 @@ def market_home(request):
             if name:
                 all_people.add(name)
 
+    # Fetch Yahoo Finance news (force refresh with ?refresh=1)
+    from datetime import datetime
+    news_articles = []
+    force = request.GET.get("refresh") == "1"
+    try:
+        news_articles = fetch_market_news(force_refresh=force)
+        # 将 ISO 时间字符串转回 datetime 对象供模板使用
+        for a in news_articles:
+            if isinstance(a.get("published_at"), str):
+                a["published_at"] = datetime.fromisoformat(a["published_at"])
+    except Exception as e:
+        logger.warning("yfinance news fetch failed: %s", e)
+
+    # 检查缓存时间
+    from .market_data import CACHE_FILE
+    cache_mtime = None
+    try:
+        import os
+        if os.path.exists(CACHE_FILE):
+            cache_mtime = datetime.fromtimestamp(os.path.getmtime(CACHE_FILE))
+    except Exception:
+        pass
+
     return render(request, "market/home.html", {
         "snapshots": snapshots,
         "featured_articles": featured_articles,
         "latest_articles": latest_articles,
         "all_people": sorted(all_people),
+        "news_articles": news_articles,
+        "news_updated_at": cache_mtime,
     })
 
 

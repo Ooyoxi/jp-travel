@@ -1,0 +1,177 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}个股箱体策略 - QuantBase{% endblock %}
+
+{% block content %}
+<div class="bg-white border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="flex items-center justify-between">
+            <div>
+                <h1 class="text-2xl font-black text-gray-900">📦 个股箱体策略 v2</h1>
+                <p class="text-sm text-gray-500 mt-1">滚动箱体 · 支撑/阻力位集群 · 6只标的</p>
+            </div>
+            <a href="{% url 'strategies:box_strategy' %}"
+               class="px-3 py-1.5 bg-primary text-white rounded-lg text-xs font-medium hover:bg-secondary transition-all">
+                🔄 刷新数据
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+    {% if error %}
+    <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm mb-6">❌ 分析出错: {{ error }}</div>
+    {% endif %}
+
+    {% if results %}
+    <div class="text-xs text-gray-400 mb-4">分析日期: {{ analysis_date|date:"Y-m-d H:i" }}</div>
+
+    <div class="grid grid-cols-1 gap-6">
+        {% for ticker, data in results.items %}
+        <div class="bg-card rounded-xl border border-gray-200/80 overflow-hidden">
+            {% if data.error %}
+            <div class="p-6 text-red-500 text-sm">{{ data.error }}</div>
+            {% else %}
+            <!-- Header -->
+            <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+                <div>
+                    <span class="text-lg font-bold text-gray-900 font-mono">{{ ticker }}</span>
+                    <span class="text-sm text-gray-500 ml-2">{{ data.name }}</span>
+                    <span class="text-xs text-gray-400 ml-2">{{ data.data_points }}日 · {{ data.total_windows }}个窗口 / {{ data.valid_windows }}有效</span>
+                </div>
+                <div class="text-right">
+                    <div class="text-2xl font-bold font-mono text-gray-900">${{ data.last_close|floatformat:2 }}</div>
+                    <div class="text-xs text-gray-400">{{ data.last_date }}</div>
+                </div>
+            </div>
+
+            <div class="p-6 grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <!-- 箱体 & 支撑/阻力位集群 -->
+                <div>
+                    <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider mb-3">📍 最新箱体</h3>
+                    {% if data.box %}
+                    <div class="space-y-2 text-sm">
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">阻力位</span>
+                            <span class="font-mono font-semibold text-red-500">${{ data.box.box_high|floatformat:2 }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">支撑位</span>
+                            <span class="font-mono font-semibold text-emerald-500">${{ data.box.box_low|floatformat:2 }}</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">幅度</span>
+                            <span class="font-mono">{{ data.box.range_pct }}%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-gray-500">触碰</span>
+                            <span class="font-mono text-xs">下{{ data.box.touches_low }}次 / 上{{ data.box.touches_high }}次</span>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- 支撑位集群 -->
+                    {% if data.levels.support_levels %}
+                    <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider mt-4 mb-2">🔽 支撑位集群</h3>
+                    <div class="space-y-1">
+                        {% for lv in data.levels.support_levels %}
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="font-mono font-semibold text-emerald-600">${{ lv.level|floatformat:2 }}</span>
+                            <span class="text-gray-400">×{{ lv.count }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- 阻力位集群 -->
+                    {% if data.levels.resistance_levels %}
+                    <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider mt-3 mb-2">📈 阻力位集群</h3>
+                    <div class="space-y-1">
+                        {% for lv in data.levels.resistance_levels %}
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="font-mono font-semibold text-red-500">${{ lv.level|floatformat:2 }}</span>
+                            <span class="text-gray-400">×{{ lv.count }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- 支撑买入信号 -->
+                <div>
+                    <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider mb-3">🔽 支撑位买入</h3>
+                    {% if data.buy_signals %}
+                    <div class="text-xs text-gray-400 mb-2">共 {{ data.buy_signals|length }} 次信号</div>
+                    <div class="space-y-1.5 max-h-64 overflow-y-auto">
+                        {% for s in data.buy_signals reversed %}
+                        <div class="flex items-center justify-between text-xs bg-emerald-50 rounded px-3 py-1.5">
+                            <span class="text-gray-500 text-[10px]">{{ s.date }}</span>
+                            <span class="text-emerald-600 font-semibold">🔽 ${{ s.price|floatformat:2 }}</span>
+                            <span class="text-gray-400 text-[10px]">支撑 ${{ s.ref_low|floatformat:0 }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-sm text-gray-400">暂无</div>
+                    {% endif %}
+                </div>
+
+                <!-- 突破加仓信号 -->
+                <div>
+                    <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider mb-3">📈 突破位加仓</h3>
+                    {% if data.add_signals %}
+                    <div class="text-xs text-gray-400 mb-2">共 {{ data.add_signals|length }} 次信号</div>
+                    <div class="space-y-1.5 max-h-64 overflow-y-auto">
+                        {% for s in data.add_signals reversed %}
+                        <div class="flex items-center justify-between text-xs bg-blue-50 rounded px-3 py-1.5">
+                            <span class="text-gray-500 text-[10px]">{{ s.date }}</span>
+                            <span class="text-blue-600 font-semibold">📈 ${{ s.price|floatformat:2 }}</span>
+                            <span class="text-gray-400 text-[10px]">阻力 ${{ s.ref_high|floatformat:0 }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-sm text-gray-400">暂无</div>
+                    {% endif %}
+                </div>
+
+                <!-- 回测 -->
+                <div>
+                    <h3 class="text-xs font-bold text-gray-800 uppercase tracking-wider mb-3">📊 回测（支撑→突破）</h3>
+                    {% if data.closed_trades %}
+                    <div class="text-xs text-gray-400 mb-2">{{ data.trade_count }}次交易 · 胜率 {{ data.win_rate }}%</div>
+                    <div class="space-y-1.5 max-h-64 overflow-y-auto">
+                        {% for t in data.closed_trades reversed %}
+                        <div class="flex items-center justify-between text-xs bg-gray-50 rounded px-3 py-1.5">
+                            <span class="text-gray-400 text-[10px]">{{ t.buy_date }}</span>
+                            <span class="font-semibold {% if t.return > 0 %}text-red-500{% else %}text-emerald-500{% endif %}">
+                                {{ t.return|floatformat:1 }}%
+                            </span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-sm text-gray-400">暂无</div>
+                    {% endif %}
+                    {% for t in data.open_trades %}
+                    <div class="mt-2 text-xs bg-yellow-50 rounded-lg px-3 py-2">
+                        ⏳ 持仓 <span class="font-semibold {% if t.return > 0 %}text-red-500{% endif %}">{{ t.return|floatformat:1 }}%</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    {% else %}
+    <div class="bg-card rounded-xl p-12 text-center border border-dashed border-gray-200">
+        <p class="text-4xl mb-4">📦</p>
+        <p class="text-gray-500 text-sm">{% trans "暂无数据" %}</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -7,3 +7,5 @@ staticfiles/
 .env
 *.zip
 .DS_Store
+.ipynb_checkpoints/
+_news_cache.json

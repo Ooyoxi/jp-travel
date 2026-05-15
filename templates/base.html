@@ -85,6 +85,8 @@
                        class="px-3 py-1.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition-all">{% trans "学习笔记" %}</a>
                     <a href="{% url 'strategies:strategy_list' %}"
                        class="px-3 py-1.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition-all">{% trans "策略库" %}</a>
+                    <a href="{% url 'strategies:box_strategy' %}"
+                       class="px-3 py-1.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition-all">{% trans "箱体策略" %}</a>
                     <a href="{% url 'market:market_home' %}"
                        class="px-3 py-1.5 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:bg-white/10 transition-all">{% trans "每日市场" %}</a>
                 </nav>
@@ -113,6 +115,7 @@
                 <a href="{% url 'notes:home' %}" class="block px-3 py-2 rounded text-sm text-gray-300 hover:text-white hover:bg-white/10">{% trans "首页" %}</a>
                 <a href="{% url 'notes:note_list' %}" class="block px-3 py-2 rounded text-sm text-gray-300 hover:text-white hover:bg-white/10">{% trans "学习笔记" %}</a>
                 <a href="{% url 'strategies:strategy_list' %}" class="block px-3 py-2 rounded text-sm text-gray-300 hover:text-white hover:bg-white/10">{% trans "策略库" %}</a>
+                <a href="{% url 'strategies:box_strategy' %}" class="block px-3 py-2 rounded text-sm text-gray-300 hover:text-white hover:bg-white/10">{% trans "箱体策略" %}</a>
                 <a href="{% url 'market:market_home' %}" class="block px-3 py-2 rounded text-sm text-gray-300 hover:text-white hover:bg-white/10">{% trans "每日市场" %}</a>
             </div>
         </div>
